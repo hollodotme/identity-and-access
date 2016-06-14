@@ -6,6 +6,7 @@
 namespace Dreiwolt\IdentityAndAccess\Domain\Models\Tenants;
 
 use Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces\RepresentsTenantState;
+use Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States\UnblockedState;
 
 /**
  * Class Tenant
@@ -22,12 +23,12 @@ final class Tenant
 	/** @var RepresentsTenantState */
 	private $state;
 
-	public function __construct( TenantId $tenantId, TenantName $name, RepresentsTenantState $state )
+	public function __construct( TenantId $tenantId, TenantName $name )
 	{
 		$this->tenantId = $tenantId;
 		$this->name     = $name;
 
-		$this->setState( $state );
+		$this->setState( new UnblockedState() );
 	}
 
 	private function setState( RepresentsTenantState $tenantState )
