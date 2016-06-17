@@ -19,7 +19,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"hollodotme\\IdentityAndAccess\\": "src/"
+			"hollodotme\\IdentityAndAccess\\": "src/",
+			"hollodotme\\EventStore\\": "src/EventStore/"
 		}
 	},
 	"autoload-dev": {

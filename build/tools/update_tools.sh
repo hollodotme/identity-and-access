@@ -3,14 +3,13 @@
 # Absolute path to this script, e.g. /home/user/bin/foo.sh
 cd "$(dirname "$0")"
 
-rm -rf "*.phar"
+rm -rf ./*.phar
 
 # Composer
 curl -sS 'https://getcomposer.org/installer' | php --
 
 # PHPUNIT
-wget -c https://phar.phpunit.de/phpunit-old.phar
-mv phpunit-old.phar phpunit.phar
+wget -c https://phar.phpunit.de/phpunit.phar
 
 # PHPLOC
 wget -c https://phar.phpunit.de/phploc.phar
