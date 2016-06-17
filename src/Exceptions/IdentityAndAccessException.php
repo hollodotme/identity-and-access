@@ -3,11 +3,11 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Exceptions;
+namespace hollodotme\IdentityAndAccess\Exceptions;
 
 /**
  * Class IdentityAndAccessException
- * @package Dreiwolt\IdentityAndAccess\Exceptions
+ * @package hollodotme\IdentityAndAccess\Exceptions
  */
 class IdentityAndAccessException extends \Exception
 {

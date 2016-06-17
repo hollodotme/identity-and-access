@@ -3,15 +3,15 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Tenants;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants;
 
-use Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States\Exceptions\IllegalTenantStateTransition;
-use Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces\RepresentsTenantState;
-use Dreiwolt\IdentityAndAccess\Traits\Scalarizing;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Exceptions\IllegalTenantStateTransition;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces\RepresentsTenantState;
+use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 
 /**
  * Class AbstractTenantState
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Tenants
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Tenants
  */
 abstract class AbstractTenantState implements RepresentsTenantState
 {

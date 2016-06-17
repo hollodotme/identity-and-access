@@ -3,13 +3,13 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces;
 
-use Dreiwolt\IdentityAndAccess\Interfaces\RepresentsValueAsString;
+use hollodotme\IdentityAndAccess\Interfaces\RepresentsValueAsString;
 
 /**
  * Interface RepresentsTenantState
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces
  */
 interface RepresentsTenantState extends RepresentsValueAsString
 {

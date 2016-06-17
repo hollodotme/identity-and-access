@@ -3,11 +3,11 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Applications;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Applications;
 
 /**
  * Class Application
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Applications
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Applications
  */
 final class Application
 {

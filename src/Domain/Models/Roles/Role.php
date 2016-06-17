@@ -3,13 +3,13 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Roles;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Roles;
 
-use Dreiwolt\IdentityAndAccess\Domain\Models\Applications\ApplicationId;
+use hollodotme\IdentityAndAccess\Domain\Models\Applications\ApplicationId;
 
 /**
  * Class Role
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Roles
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Roles
  */
 final class Role
 {

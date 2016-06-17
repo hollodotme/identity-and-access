@@ -3,7 +3,7 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Traits;
+namespace hollodotme\IdentityAndAccess\Traits;
 
 trait Scalarizing
 {

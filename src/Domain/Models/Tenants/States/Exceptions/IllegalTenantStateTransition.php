@@ -3,13 +3,13 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States\Exceptions;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Exceptions;
 
-use Dreiwolt\IdentityAndAccess\Exceptions\IdentityAndAccessException;
+use hollodotme\IdentityAndAccess\Exceptions\IdentityAndAccessException;
 
 /**
  * Class IllegalTenantState
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States\Exceptions
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Exceptions
  */
 final class IllegalTenantStateTransition extends IdentityAndAccessException
 {

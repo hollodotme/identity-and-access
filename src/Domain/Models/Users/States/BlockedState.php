@@ -3,13 +3,13 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Users\States;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Users\States;
 
-use Dreiwolt\IdentityAndAccess\Domain\Models\Users\States\Interfaces\RepresentsUserState;
+use hollodotme\IdentityAndAccess\Domain\Models\Users\States\Interfaces\RepresentsUserState;
 
 /**
  * Class BlockedState
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Users\States
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Users\States
  */
 final class BlockedState extends AbstractUserState
 {

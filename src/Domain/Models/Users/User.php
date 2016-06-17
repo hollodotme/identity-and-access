@@ -3,16 +3,16 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Users;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Users;
 
-use Dreiwolt\IdentityAndAccess\Domain\Models\Roles\Role;
-use Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\TenantId;
-use Dreiwolt\IdentityAndAccess\Domain\Models\Users\States\Interfaces\RepresentsUserState;
-use Dreiwolt\IdentityAndAccess\Domain\Models\Users\States\UnblockedState;
+use hollodotme\IdentityAndAccess\Domain\Models\Roles\Role;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\TenantId;
+use hollodotme\IdentityAndAccess\Domain\Models\Users\States\Interfaces\RepresentsUserState;
+use hollodotme\IdentityAndAccess\Domain\Models\Users\States\UnblockedState;
 
 /**
  * Class User
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Users
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Users
  */
 final class User
 {

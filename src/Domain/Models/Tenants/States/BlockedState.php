@@ -3,14 +3,14 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants\States;
 
-use Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\AbstractTenantState;
-use Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces\RepresentsTenantState;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\AbstractTenantState;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces\RepresentsTenantState;
 
 /**
  * Class BlockedState
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Tenants\States
  */
 final class BlockedState extends AbstractTenantState
 {

@@ -3,11 +3,11 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants\States;
 
 /**
  * Class TenantState
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Tenants\States
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Tenants\States
  */
 abstract class TenantState
 {
