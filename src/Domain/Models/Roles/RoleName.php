@@ -3,14 +3,14 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Roles;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Roles;
 
-use Dreiwolt\IdentityAndAccess\Interfaces\RepresentsValueAsString;
-use Dreiwolt\IdentityAndAccess\Traits\Scalarizing;
+use hollodotme\IdentityAndAccess\Interfaces\RepresentsValueAsString;
+use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 
 /**
  * Class RoleName
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Roles
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Roles
  */
 final class RoleName implements RepresentsValueAsString
 {

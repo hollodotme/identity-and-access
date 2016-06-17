@@ -3,14 +3,14 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\StandardTypes;
+namespace hollodotme\IdentityAndAccess\StandardTypes;
 
-use Dreiwolt\IdentityAndAccess\Interfaces\RepresentsValueAsString;
-use Dreiwolt\IdentityAndAccess\Traits\Scalarizing;
+use hollodotme\IdentityAndAccess\Interfaces\RepresentsValueAsString;
+use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 
 /**
  * Class UUID
- * @package Dreiwolt\IdentityAndAccess\StandardTypes
+ * @package hollodotme\IdentityAndAccess\StandardTypes
  */
 final class UUID implements RepresentsValueAsString
 {

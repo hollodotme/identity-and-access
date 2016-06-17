@@ -3,11 +3,11 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Users\States;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Users\States;
 
 /**
  * Class UserState
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Users\States
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Users\States
  */
 abstract class UserState
 {

@@ -3,15 +3,15 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Applications;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Applications;
 
-use Dreiwolt\IdentityAndAccess\Interfaces\RepresentsValueAsString;
-use Dreiwolt\IdentityAndAccess\StandardTypes\UUID;
-use Dreiwolt\IdentityAndAccess\Traits\Scalarizing;
+use hollodotme\IdentityAndAccess\Interfaces\RepresentsValueAsString;
+use hollodotme\IdentityAndAccess\StandardTypes\UUID;
+use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 
 /**
  * Class ApplicationId
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Applications
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Applications
  */
 final class ApplicationId implements RepresentsValueAsString
 {

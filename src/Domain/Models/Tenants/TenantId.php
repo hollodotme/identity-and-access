@@ -3,15 +3,15 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Tenants;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants;
 
-use Dreiwolt\IdentityAndAccess\Interfaces\RepresentsValueAsString;
-use Dreiwolt\IdentityAndAccess\StandardTypes\UUID;
-use Dreiwolt\IdentityAndAccess\Traits\Scalarizing;
+use hollodotme\IdentityAndAccess\Interfaces\RepresentsValueAsString;
+use hollodotme\IdentityAndAccess\StandardTypes\UUID;
+use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 
 /**
  * Class TenantId
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Tenants
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Tenants
  */
 final class TenantId implements RepresentsValueAsString
 {

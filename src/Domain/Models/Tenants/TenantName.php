@@ -3,14 +3,14 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Models\Tenants;
+namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants;
 
-use Dreiwolt\IdentityAndAccess\Interfaces\RepresentsValueAsString;
-use Dreiwolt\IdentityAndAccess\Traits\Scalarizing;
+use hollodotme\IdentityAndAccess\Interfaces\RepresentsValueAsString;
+use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 
 /**
  * Class TenantName
- * @package Dreiwolt\IdentityAndAccess\Domain\Models\Tenants
+ * @package hollodotme\IdentityAndAccess\Domain\Models\Tenants
  */
 final class TenantName implements RepresentsValueAsString
 {

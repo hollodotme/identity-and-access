@@ -3,13 +3,13 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Domain\Services;
+namespace hollodotme\IdentityAndAccess\Domain\Services;
 
-use Dreiwolt\IdentityAndAccess\StandardTypes\UUID;
+use hollodotme\IdentityAndAccess\StandardTypes\UUID;
 
 /**
  * Class UUIDGenerator
- * @package Dreiwolt\IdentityAndAccess\Domain\Services
+ * @package hollodotme\IdentityAndAccess\Domain\Services
  */
 final class UUIDGenerator
 {

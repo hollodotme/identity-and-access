@@ -3,11 +3,11 @@
  * @author hollodotme
  */
 
-namespace Dreiwolt\IdentityAndAccess\Interfaces;
+namespace hollodotme\IdentityAndAccess\Interfaces;
 
 /**
  * Interface IdentifiesThings
- * @package Dreiwolt\IdentityAndAccess\Interfaces
+ * @package hollodotme\IdentityAndAccess\Interfaces
  */
 interface RepresentsValueAsString extends \JsonSerializable
 {
