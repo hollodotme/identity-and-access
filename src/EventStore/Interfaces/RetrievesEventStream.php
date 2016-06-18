@@ -5,9 +5,9 @@
 
 namespace hollodotme\EventStore\Interfaces;
 
-use hollodotme\EventStore\EventStream;
-use hollodotme\EventStore\StreamId;
-use hollodotme\EventStore\StreamName;
+use hollodotme\EventStore\Types\EventStream;
+use hollodotme\EventStore\Types\StreamId;
+use hollodotme\EventStore\Types\StreamName;
 
 /**
  * Interface RetrievesEventStream

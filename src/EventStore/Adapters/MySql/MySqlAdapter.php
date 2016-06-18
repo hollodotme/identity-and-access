@@ -5,21 +5,21 @@
 
 namespace hollodotme\EventStore\Adapters\MySql;
 
-use hollodotme\EventStore\ActorName;
 use hollodotme\EventStore\Adapters\MySql\Exceptions\MySqlException;
 use hollodotme\EventStore\EventEnvelope;
-use hollodotme\EventStore\EventHeader;
-use hollodotme\EventStore\EventId;
-use hollodotme\EventStore\EventPayload;
-use hollodotme\EventStore\EventStream;
 use hollodotme\EventStore\Interfaces\EnclosesEvent;
 use hollodotme\EventStore\Interfaces\MapsEvent;
 use hollodotme\EventStore\Interfaces\StoresEventStream;
-use hollodotme\EventStore\OccurredOn;
-use hollodotme\EventStore\ServerId;
-use hollodotme\EventStore\StreamId;
-use hollodotme\EventStore\StreamName;
-use hollodotme\EventStore\StreamSequence;
+use hollodotme\EventStore\Types\ActorName;
+use hollodotme\EventStore\Types\EventHeader;
+use hollodotme\EventStore\Types\EventId;
+use hollodotme\EventStore\Types\EventPayload;
+use hollodotme\EventStore\Types\EventStream;
+use hollodotme\EventStore\Types\OccurredOn;
+use hollodotme\EventStore\Types\ServerId;
+use hollodotme\EventStore\Types\StreamId;
+use hollodotme\EventStore\Types\StreamName;
+use hollodotme\EventStore\Types\StreamSequence;
 
 /**
  * Class EventStore

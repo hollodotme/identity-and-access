@@ -5,7 +5,7 @@
 
 namespace hollodotme\IdentityAndAccess\Application;
 
-use hollodotme\EventStore\StreamName;
+use hollodotme\EventStore\Types\StreamName;
 use hollodotme\IdentityAndAccess\Application\Exceptions\LoadingEventMapFailed;
 use hollodotme\IdentityAndAccess\Application\Interfaces\MapsEventClassName;
 

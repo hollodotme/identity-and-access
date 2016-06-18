@@ -3,14 +3,14 @@
  * @author hollodotme
  */
 
-namespace hollodotme\EventStore;
+namespace hollodotme\EventStore\Types;
 
 use hollodotme\EventStore\Interfaces\RepresentsValueAsString;
 use hollodotme\EventStore\Traits\Scalarizing;
 
 /**
  * Class EventName
- * @package hollodotme\EventStore
+ * @package hollodotme\EventStore\Types
  */
 final class EventName implements RepresentsValueAsString
 {

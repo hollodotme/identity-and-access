@@ -5,7 +5,7 @@
 
 namespace hollodotme\IdentityAndAccess\Application\Interfaces;
 
-use hollodotme\EventStore\EventId;
+use hollodotme\EventStore\Types\EventId;
 
 /**
  * Interface MapsEventClassName

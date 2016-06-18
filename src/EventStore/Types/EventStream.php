@@ -3,13 +3,13 @@
  * @author hollodotme
  */
 
-namespace hollodotme\EventStore;
+namespace hollodotme\EventStore\Types;
 
 use hollodotme\EventStore\Interfaces\EnclosesEvent;
 
 /**
  * Class EventStream
- * @package hollodotme\EventStore
+ * @package hollodotme\EventStore\Types
  */
 final class EventStream
 {
@@ -27,7 +27,7 @@ final class EventStream
 	}
 
 	/**
-	 * @return array|Interfaces\EnclosesEvent[]
+	 * @return array|EnclosesEvent[]
 	 */
 	public function getEventEnvelopes() : array
 	{

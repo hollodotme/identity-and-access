@@ -5,8 +5,8 @@
 
 namespace hollodotme\EventStore\Exceptions;
 
-use hollodotme\EventStore\EventId;
-use hollodotme\EventStore\StreamName;
+use hollodotme\EventStore\Types\EventId;
+use hollodotme\EventStore\Types\StreamName;
 
 /**
  * Class MappingEventFailed

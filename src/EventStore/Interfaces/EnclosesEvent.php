@@ -5,7 +5,7 @@
 
 namespace hollodotme\EventStore\Interfaces;
 
-use hollodotme\EventStore\EventHeader;
+use hollodotme\EventStore\Types\EventHeader;
 
 /**
  * Interface EnclosesEvent

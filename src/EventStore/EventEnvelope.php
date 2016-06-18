@@ -7,6 +7,7 @@ namespace hollodotme\EventStore;
 
 use hollodotme\EventStore\Interfaces\CarriesEventData;
 use hollodotme\EventStore\Interfaces\EnclosesEvent;
+use hollodotme\EventStore\Types\EventHeader;
 
 /**
  * Class EventEnvelope

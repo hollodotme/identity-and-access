@@ -7,6 +7,9 @@ namespace hollodotme\EventStore;
 
 use hollodotme\EventStore\Interfaces\MapsEvent;
 use hollodotme\EventStore\Interfaces\StoresEventStream;
+use hollodotme\EventStore\Types\EventStream;
+use hollodotme\EventStore\Types\StreamId;
+use hollodotme\EventStore\Types\StreamName;
 
 /**
  * Class EventStore

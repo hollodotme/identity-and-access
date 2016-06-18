@@ -5,7 +5,7 @@
 
 namespace hollodotme\EventStore\Interfaces;
 
-use hollodotme\EventStore\EventStream;
+use hollodotme\EventStore\Types\EventStream;
 
 /**
  * Interface PersistsEventStream

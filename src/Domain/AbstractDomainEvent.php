@@ -5,10 +5,10 @@
 
 namespace hollodotme\IdentityAndAccess\Domain;
 
-use hollodotme\EventStore\EventId;
-use hollodotme\EventStore\EventName;
-use hollodotme\EventStore\EventPayload;
 use hollodotme\EventStore\Interfaces\CarriesEventData;
+use hollodotme\EventStore\Types\EventId;
+use hollodotme\EventStore\Types\EventName;
+use hollodotme\EventStore\Types\EventPayload;
 
 /**
  * Class AbstractDomainEvent

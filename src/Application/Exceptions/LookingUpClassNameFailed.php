@@ -5,7 +5,7 @@
 
 namespace hollodotme\IdentityAndAccess\Application\Exceptions;
 
-use hollodotme\EventStore\EventId;
+use hollodotme\EventStore\Types\EventId;
 use hollodotme\IdentityAndAccess\Exceptions\IdentityAndAccessException;
 
 /**

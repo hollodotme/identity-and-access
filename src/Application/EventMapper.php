@@ -6,8 +6,8 @@
 namespace hollodotme\IdentityAndAccess\Application;
 
 use hollodotme\EventStore\AbstractEventMapper;
-use hollodotme\EventStore\EventId;
-use hollodotme\EventStore\StreamName;
+use hollodotme\EventStore\Types\EventId;
+use hollodotme\EventStore\Types\StreamName;
 
 /**
  * Class EventMapper

@@ -5,9 +5,9 @@
 
 namespace hollodotme\EventStore\Interfaces;
 
-use hollodotme\EventStore\EventHeader;
-use hollodotme\EventStore\EventId;
-use hollodotme\EventStore\EventPayload;
+use hollodotme\EventStore\Types\EventHeader;
+use hollodotme\EventStore\Types\EventId;
+use hollodotme\EventStore\Types\EventPayload;
 
 /**
  * Interface MapsEvent

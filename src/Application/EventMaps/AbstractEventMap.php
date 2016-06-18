@@ -5,7 +5,7 @@
 
 namespace hollodotme\IdentityAndAccess\Application\EventMaps;
 
-use hollodotme\EventStore\EventId;
+use hollodotme\EventStore\Types\EventId;
 use hollodotme\IdentityAndAccess\Application\Exceptions\LookingUpClassNameFailed;
 use hollodotme\IdentityAndAccess\Application\Interfaces\MapsEventClassName;
 

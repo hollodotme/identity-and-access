@@ -3,11 +3,11 @@
  * @author hollodotme
  */
 
-namespace hollodotme\EventStore;
+namespace hollodotme\EventStore\Types;
 
 /**
  * Class EventHeader
- * @package hollodotme\EventStore
+ * @package hollodotme\EventStore\Types
  */
 final class EventHeader
 {

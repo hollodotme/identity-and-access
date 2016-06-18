@@ -9,6 +9,10 @@ use hollodotme\EventStore\Exceptions\EventStoreException;
 use hollodotme\EventStore\Exceptions\MappingEventFailed;
 use hollodotme\EventStore\Interfaces\CarriesEventData;
 use hollodotme\EventStore\Interfaces\MapsEvent;
+use hollodotme\EventStore\Types\EventHeader;
+use hollodotme\EventStore\Types\EventId;
+use hollodotme\EventStore\Types\EventPayload;
+use hollodotme\EventStore\Types\StreamName;
 
 /**
  * Class AbstractEventMapper
