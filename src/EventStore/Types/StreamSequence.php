@@ -29,8 +29,8 @@ final class StreamSequence implements RepresentsValueAsString
 		return (string)$this->streamSequence;
 	}
 
-	public function toInt() : int
+	public function increment() : self
 	{
-		return $this->streamSequence;
+		return new self( $this->streamSequence + 1 );
 	}
 }

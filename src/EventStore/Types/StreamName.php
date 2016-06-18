@@ -28,4 +28,12 @@ final class StreamName implements RepresentsValueAsString
 	{
 		return $this->streamName;
 	}
+
+	public static function fromClassName( string $className ) : self
+	{
+		$nsParts   = explode( '\\', $className );
+		$className = end( $nsParts );
+
+		return new self( $className );
+	}
 }

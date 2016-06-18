@@ -5,11 +5,16 @@
 
 namespace hollodotme\IdentityAndAccess\Domain\Models\Applications;
 
+use hollodotme\EventStore\Types\EventStream;
+use hollodotme\EventStore\Types\StreamId;
+use hollodotme\IdentityAndAccess\Domain\Models\AbstractAggregateRoot;
+use hollodotme\IdentityAndAccess\Domain\Models\Applications\Events\ApplicationWasRegisteredEvent;
+
 /**
  * Class Application
  * @package hollodotme\IdentityAndAccess\Domain\Models\Applications
  */
-final class Application
+final class Application extends AbstractAggregateRoot
 {
 	/** @var ApplicationId */
 	private $applicationId;
@@ -17,10 +22,12 @@ final class Application
 	/** @var ApplicationName */
 	private $name;
 
-	public function __construct( ApplicationId $applicationId, ApplicationName $name )
+	public static function register( ApplicationId $applicationId, ApplicationName $name ) : self
 	{
-		$this->applicationId = $applicationId;
-		$this->name          = $name;
+		$application = new Application( new EventStream() );
+		$application->publish( new ApplicationWasRegisteredEvent( $applicationId, $name ) );
+
+		return $application;
 	}
 
 	public function getApplicationId() : ApplicationId
@@ -31,5 +38,10 @@ final class Application
 	public function getName() : ApplicationName
 	{
 		return $this->name;
+	}
+
+	public function getStreamId() : StreamId
+	{
+		return new StreamId( $this->applicationId->toString() );
 	}
 }
