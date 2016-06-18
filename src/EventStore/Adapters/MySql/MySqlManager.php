@@ -33,7 +33,10 @@ final class MySqlManager extends \PDO
 	{
 		$this->guardCanBeginTransaction();
 
-		parent::beginTransaction();
+		if ( !parent::beginTransaction() )
+		{
+			throw new BeginningTransationFailed();
+		}
 	}
 
 	/**
@@ -54,7 +57,10 @@ final class MySqlManager extends \PDO
 	{
 		$this->guardCanCommitTransaction();
 
-		parent::commit();
+		if ( !parent::commit() )
+		{
+			throw new CommittingTransactionFailed();
+		}
 	}
 
 	/**
@@ -75,7 +81,10 @@ final class MySqlManager extends \PDO
 	{
 		$this->guardCanRollBackTransaction();
 
-		parent::rollBack();
+		if ( !parent::rollBack() )
+		{
+			throw new RollingBackTransactionFailed();
+		}
 	}
 
 	/**

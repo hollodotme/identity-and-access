@@ -14,8 +14,7 @@ use hollodotme\EventStore\EventPayload;
 use hollodotme\EventStore\EventStream;
 use hollodotme\EventStore\Interfaces\EnclosesEvent;
 use hollodotme\EventStore\Interfaces\MapsEvent;
-use hollodotme\EventStore\Interfaces\PersistsEventStream;
-use hollodotme\EventStore\Interfaces\RetrievesEventStream;
+use hollodotme\EventStore\Interfaces\StoresEventStream;
 use hollodotme\EventStore\OccurredOn;
 use hollodotme\EventStore\ServerId;
 use hollodotme\EventStore\StreamId;
@@ -26,14 +25,17 @@ use hollodotme\EventStore\StreamSequence;
  * Class EventStore
  * @package hollodotme\EventStore\Adapters\MySql
  */
-final class MySqlEventStore implements PersistsEventStream, RetrievesEventStream
+final class MySqlAdapter implements StoresEventStream
 {
+	/** @var MySqlConnection */
+	private $connection;
+
 	/** @var MySqlManager */
 	private $manager;
 
-	public function __construct( MySqlManager $manager )
+	public function __construct( MySqlConnection $connection )
 	{
-		$this->manager = $manager;
+		$this->connection = $connection;
 	}
 
 	/**
@@ -43,11 +45,11 @@ final class MySqlEventStore implements PersistsEventStream, RetrievesEventStream
 	 */
 	public function persistEventStream( EventStream $eventStream )
 	{
-		$this->manager->beginTransaction();
+		$this->getManager()->beginTransaction();
 
 		try
 		{
-			$statement = $this->manager->prepare(
+			$statement = $this->getManager()->prepare(
 				"INSERT INTO `EventStore` (streamName, streamId, streamSequence, eventId, eventName, eventPayload, occurredOn, actorName, serverId)
 				 VALUES (:streamName, :streamId, :streamSequence, :eventId, :eventName, :eventPayload, :occurredOn, :actorName, :serverId)"
 			);
@@ -57,20 +59,30 @@ final class MySqlEventStore implements PersistsEventStream, RetrievesEventStream
 				$this->persistEventEnvelope( $statement, $eventEnvelope );
 			}
 
-			$this->manager->commit();
+			$this->getManager()->commit();
 		}
 		catch ( MySqlException $e )
 		{
-			$this->manager->rollBack();
+			$this->getManager()->rollBack();
 
 			throw $e;
 		}
 		catch ( \Throwable $e )
 		{
-			$this->manager->rollBack();
+			$this->getManager()->rollBack();
 
 			throw new MySqlException( $e->getMessage(), $e->getCode(), $e );
 		}
+	}
+
+	private function getManager() : MySqlManager
+	{
+		if ( $this->manager === null )
+		{
+			$this->manager = new MySqlManager( $this->connection );
+		}
+
+		return $this->manager;
 	}
 
 	/**
@@ -135,7 +147,7 @@ final class MySqlEventStore implements PersistsEventStream, RetrievesEventStream
 				    AND streamId = :streamId
 				  ORDER BY streamSequence ASC";
 
-		$statement = $this->manager->prepare( $query );
+		$statement = $this->getManager()->prepare( $query );
 		$statement->execute(
 			[
 				'streamName' => $streamName->toString(),
