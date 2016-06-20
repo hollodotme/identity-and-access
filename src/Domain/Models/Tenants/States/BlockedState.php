@@ -19,6 +19,11 @@ final class BlockedState extends AbstractTenantState
 		return new UnblockedState();
 	}
 
+	public function canUnblock() : bool
+	{
+		return true;
+	}
+
 	public function toString() : string
 	{
 		return TenantState::BLOCKED;

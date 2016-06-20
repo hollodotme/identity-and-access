@@ -16,4 +16,8 @@ interface RepresentsUserState extends RepresentsValueAsString
 	public function block() : RepresentsUserState;
 
 	public function unblock() : RepresentsUserState;
+
+	public function canBlock() : bool;
+
+	public function canUnblock() : bool;
 }

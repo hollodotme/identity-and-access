@@ -31,6 +31,16 @@ abstract class AbstractTenantState implements RepresentsTenantState
 		throw new IllegalTenantStateTransition();
 	}
 
+	public function canBlock() : bool
+	{
+		return false;
+	}
+
+	public function canUnblock() : bool
+	{
+		return false;
+	}
+
 	public static function fromString( string $stateName ) : RepresentsTenantState
 	{
 		switch ( $stateName )

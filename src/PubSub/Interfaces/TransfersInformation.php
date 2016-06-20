@@ -5,8 +5,8 @@
 
 namespace hollodotme\PubSub\Interfaces;
 
+use hollodotme\PubSub\Types\Channel;
 use hollodotme\PubSub\Types\MessageId;
-use hollodotme\PubSub\Types\MessageName;
 
 /**
  * Interface TransfersInformation
@@ -16,5 +16,5 @@ interface TransfersInformation
 {
 	public function getMessageId() : MessageId;
 
-	public function getMessageName() : MessageName;
+	public function getChannel() : Channel;
 }

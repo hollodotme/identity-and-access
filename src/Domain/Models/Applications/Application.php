@@ -30,8 +30,8 @@ final class Application extends AbstractAggregateRoot
 
 	public function whenApplicationWasRegistered( ApplicationWasRegistered $event )
 	{
-		$this->id   = $event->getId();
-		$this->name = $event->getName();
+		$this->id   = $event->getApplicationId();
+		$this->name = $event->getApplicationName();
 	}
 
 	public function getId() : ApplicationId

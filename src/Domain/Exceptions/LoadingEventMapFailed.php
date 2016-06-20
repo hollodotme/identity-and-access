@@ -3,14 +3,14 @@
  * @author hollodotme
  */
 
-namespace hollodotme\IdentityAndAccess\Application\Exceptions;
+namespace hollodotme\IdentityAndAccess\Domain\Exceptions;
 
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\IdentityAndAccess\Exceptions\IdentityAndAccessException;
 
 /**
  * Class LoadingEventMapFailed
- * @package hollodotme\IdentityAndAccess\Application\Exceptions
+ * @package hollodotme\IdentityAndAccess\Domain\Exceptions
  */
 final class LoadingEventMapFailed extends IdentityAndAccessException
 {

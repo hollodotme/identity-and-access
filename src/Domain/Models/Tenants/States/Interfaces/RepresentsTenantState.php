@@ -16,4 +16,8 @@ interface RepresentsTenantState extends RepresentsValueAsString
 	public function block() : RepresentsTenantState;
 
 	public function unblock() : RepresentsTenantState;
+
+	public function canBlock() : bool;
+
+	public function canUnblock() : bool;
 }

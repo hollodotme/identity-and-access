@@ -17,43 +17,43 @@ use hollodotme\IdentityAndAccess\Domain\Models\Applications\ApplicationName;
 final class ApplicationWasRegistered extends AbstractDomainEvent
 {
 	/** @var ApplicationId */
-	private $id;
+	private $applicationId;
 
 	/** @var ApplicationName */
-	private $name;
+	private $applicationName;
 
-	public function __construct( ApplicationId $id, ApplicationName $name )
+	public function __construct( ApplicationId $applicationId, ApplicationName $applicationName )
 	{
-		$this->id   = $id;
-		$this->name = $name;
+		$this->applicationId   = $applicationId;
+		$this->applicationName = $applicationName;
 	}
 
-	public function getId() : ApplicationId
+	public function getApplicationId() : ApplicationId
 	{
-		return $this->id;
+		return $this->applicationId;
 	}
 
-	public function getName() : ApplicationName
+	public function getApplicationName() : ApplicationName
 	{
-		return $this->name;
+		return $this->applicationName;
 	}
 
 	public function getStreamId() : StreamId
 	{
-		return new StreamId( $this->id->toString() );
+		return new StreamId( $this->applicationId->toString() );
 	}
 
 	protected function toPayload() : array
 	{
 		return [
-			'id'   => $this->id->toString(),
-			'name' => $this->name->toString(),
+			'applicationId'   => $this->applicationId->toString(),
+			'applicationName' => $this->applicationName->toString(),
 		];
 	}
 
 	protected function fromPayload( array $payload )
 	{
-		$this->id   = new ApplicationId( $payload['id'] );
-		$this->name = new ApplicationName( $payload['name'] );
+		$this->applicationId   = new ApplicationId( $payload['applicationId'] );
+		$this->applicationName = new ApplicationName( $payload['applicationName'] );
 	}
 }

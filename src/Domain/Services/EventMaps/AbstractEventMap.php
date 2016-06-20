@@ -3,11 +3,11 @@
  * @author hollodotme
  */
 
-namespace hollodotme\IdentityAndAccess\Application\EventMaps;
+namespace hollodotme\IdentityAndAccess\Domain\Services\EventMaps;
 
 use hollodotme\EventStore\Types\EventId;
-use hollodotme\IdentityAndAccess\Application\Exceptions\LookingUpClassNameFailed;
-use hollodotme\IdentityAndAccess\Application\Interfaces\MapsEventClassName;
+use hollodotme\IdentityAndAccess\Domain\Exceptions\LookingUpClassNameFailed;
+use hollodotme\IdentityAndAccess\Domain\Services\Interfaces\MapsEventClassName;
 
 /**
  * Class AbstractEventMap
@@ -19,6 +19,8 @@ abstract class AbstractEventMap implements MapsEventClassName
 
 	public function lookUpClassName( EventId $eventId ) : string
 	{
+		echo '<pre>', htmlspecialchars( print_r( static::MAP, 1 ) ), '</pre>';
+
 		if ( array_key_exists( $eventId->toString(), static::MAP ) )
 		{
 			return static::MAP[ $eventId->toString() ];

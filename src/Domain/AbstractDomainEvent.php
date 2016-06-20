@@ -19,12 +19,12 @@ abstract class AbstractDomainEvent implements ImpliesChange
 {
 	abstract public function getStreamId() : StreamId;
 
-	public function getId() : EventId
+	public function getEventId() : EventId
 	{
 		return EventId::fromEventClassName( static::class );
 	}
 
-	public function getName() : EventName
+	public function getEventName() : EventName
 	{
 		return EventName::fromEventClassName( static::class );
 	}

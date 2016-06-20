@@ -18,9 +18,9 @@ interface ImpliesChange
 {
 	public function getStreamId() : StreamId;
 
-	public function getId() : EventId;
+	public function getEventId() : EventId;
 
-	public function getName() : EventName;
+	public function getEventName() : EventName;
 
 	public function getPayload() : EventPayload;
 

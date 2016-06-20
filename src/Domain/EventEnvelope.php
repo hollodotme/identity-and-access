@@ -9,8 +9,8 @@ use hollodotme\EventStore\Interfaces\EnclosesEvent;
 use hollodotme\EventStore\Interfaces\ImpliesChange;
 use hollodotme\EventStore\Types\EventHeader;
 use hollodotme\PubSub\Interfaces\TransfersInformation;
+use hollodotme\PubSub\Types\Channel;
 use hollodotme\PubSub\Types\MessageId;
-use hollodotme\PubSub\Types\MessageName;
 
 /**
  * Class EventEnvelope
@@ -21,8 +21,8 @@ final class EventEnvelope implements EnclosesEvent, TransfersInformation
 	/** @var MessageId */
 	private $messageId;
 
-	/** @var MessageName */
-	private $messageName;
+	/** @var Channel */
+	private $channel;
 
 	/** @var EventHeader */
 	private $header;
@@ -36,8 +36,8 @@ final class EventEnvelope implements EnclosesEvent, TransfersInformation
 	 */
 	public function __construct( EventHeader $header, ImpliesChange $event )
 	{
-		$this->messageId   = $this->buildMessageId( $header, $event );
-		$this->messageName = new MessageName( $event->getId()->toString() );
+		$this->messageId = $this->buildMessageId( $header, $event );
+		$this->channel   = new Channel( $header->getStreamName()->toString() );
 
 		$this->header = $header;
 		$this->event  = $event;
@@ -46,9 +46,10 @@ final class EventEnvelope implements EnclosesEvent, TransfersInformation
 	private function buildMessageId( EventHeader $header, ImpliesChange $event ) : MessageId
 	{
 		$idString = sprintf(
-			'%s:%s:%s',
+			'%s:%s:%s:%s',
 			$header->getStreamName()->toString(),
-			$event->getId()->toString(),
+			$event->getStreamId()->toString(),
+			$event->getEventId()->toString(),
 			$header->getStreamSequence()->toString()
 		);
 
@@ -60,9 +61,9 @@ final class EventEnvelope implements EnclosesEvent, TransfersInformation
 		return $this->messageId;
 	}
 
-	public function getMessageName() : MessageName
+	public function getChannel() : Channel
 	{
-		return $this->messageName;
+		return $this->channel;
 	}
 
 	public function getHeader() : EventHeader

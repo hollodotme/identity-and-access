@@ -8,7 +8,7 @@ namespace hollodotme\PubSub;
 use hollodotme\PubSub\Interfaces\DispatchesMessages;
 use hollodotme\PubSub\Interfaces\SubscribesToMessages;
 use hollodotme\PubSub\Interfaces\TransfersInformation;
-use hollodotme\PubSub\Types\MessageName;
+use hollodotme\PubSub\Types\Channel;
 
 /**
  * Class MessageBus
@@ -26,7 +26,7 @@ final class MessageBus implements DispatchesMessages
 
 	public function publish( TransfersInformation $message )
 	{
-		$subscribers = $this->getSubscribersForMessageName( $message->getMessageName() );
+		$subscribers = $this->getSubscribersForChannel( $message->getChannel() );
 
 		/** @var SubscribesToMessages $subscriber */
 		foreach ( $subscribers as $subscriber )
@@ -36,17 +36,17 @@ final class MessageBus implements DispatchesMessages
 	}
 
 	/**
-	 * @param MessageName $messageName
-	 *
-	 * @return array|SubscribesToMessages[]
+	 * @param Channel $channel
+	 * 
+*@return array|SubscribesToMessages[]
 	 */
-	private function getSubscribersForMessageName( MessageName $messageName ) : array
+	private function getSubscribersForChannel( Channel $channel ) : array
 	{
 		$subscribers = [ ];
 
 		foreach ( $this->subscriptions as $msgName => $msgSubscribers )
 		{
-			if ( $messageName->equalsString( $msgName ) )
+			if ( $channel->equalsString( $msgName ) )
 			{
 				$subscribers = array_merge( $subscribers, $msgSubscribers );
 			}
@@ -55,9 +55,9 @@ final class MessageBus implements DispatchesMessages
 		return $subscribers;
 	}
 
-	public function subscribe( MessageName $messageName, SubscribesToMessages $subscriber )
+	public function subscribe( Channel $channel, SubscribesToMessages $subscriber )
 	{
-		$key = $messageName->toString();
+		$key = $channel->toString();
 
 		if ( isset($this->subscriptions[ $key ]) )
 		{

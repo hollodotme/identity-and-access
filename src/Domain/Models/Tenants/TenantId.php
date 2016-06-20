@@ -5,6 +5,7 @@
 
 namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants;
 
+use hollodotme\IdentityAndAccess\Domain\Traits\UUIDGenerating;
 use hollodotme\IdentityAndAccess\Interfaces\RepresentsValueAsString;
 use hollodotme\IdentityAndAccess\StandardTypes\UUID;
 use hollodotme\IdentityAndAccess\Traits\Scalarizing;
@@ -16,6 +17,7 @@ use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 final class TenantId implements RepresentsValueAsString
 {
 	use Scalarizing;
+	use UUIDGenerating;
 
 	/** @var UUID */
 	private $tenantId;

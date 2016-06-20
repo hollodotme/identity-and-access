@@ -12,6 +12,7 @@ use hollodotme\IdentityAndAccess\Application\Configs\MySqlConfig;
 use hollodotme\IdentityAndAccess\Domain\Repositories\ApplicationsRepository;
 use hollodotme\IdentityAndAccess\Domain\Repositories\TenantsRepository;
 use hollodotme\IdentityAndAccess\Domain\Repositories\UsersRepository;
+use hollodotme\IdentityAndAccess\Domain\Services\EventEnvelopeBuilder;
 use hollodotme\PubSub\MessageBus;
 
 /**
@@ -40,7 +41,7 @@ final class DomainManager
 			$mySqlConfig->getPassword()
 		);
 
-		$eventEnvelopeBuilder = new EventEnvelopeBuilder( new EventMapper() );
+		$eventEnvelopeBuilder = new EventEnvelopeBuilder();
 		$mySqlAdapter         = new MySqlAdapter( $connection, $eventEnvelopeBuilder );
 
 		$this->eventStore   = new EventStore( $mySqlAdapter );

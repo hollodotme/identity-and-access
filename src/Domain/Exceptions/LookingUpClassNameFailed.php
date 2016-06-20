@@ -3,14 +3,14 @@
  * @author hollodotme
  */
 
-namespace hollodotme\IdentityAndAccess\Application\Exceptions;
+namespace hollodotme\IdentityAndAccess\Domain\Exceptions;
 
 use hollodotme\EventStore\Types\EventId;
 use hollodotme\IdentityAndAccess\Exceptions\IdentityAndAccessException;
 
 /**
  * Class LookingUpClassNameFailed
- * @package hollodotme\IdentityAndAccess\Application\Exceptions
+ * @package hollodotme\IdentityAndAccess\Domain\Exceptions
  */
 final class LookingUpClassNameFailed extends IdentityAndAccessException
 {

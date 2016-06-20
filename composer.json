@@ -20,7 +20,8 @@
 	"autoload": {
 		"psr-4": {
 			"hollodotme\\IdentityAndAccess\\": "src/",
-			"hollodotme\\EventStore\\": "src/EventStore/"
+			"hollodotme\\EventStore\\": "src/EventStore/",
+			"hollodotme\\PubSub\\": "src/PubSub/"
 		}
 	},
 	"autoload-dev": {

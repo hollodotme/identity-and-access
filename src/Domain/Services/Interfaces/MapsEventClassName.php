@@ -3,13 +3,13 @@
  * @author hollodotme
  */
 
-namespace hollodotme\IdentityAndAccess\Application\Interfaces;
+namespace hollodotme\IdentityAndAccess\Domain\Services\Interfaces;
 
 use hollodotme\EventStore\Types\EventId;
 
 /**
  * Interface MapsEventClassName
- * @package hollodotme\IdentityAndAccess\Application\Interfaces
+ * @package hollodotme\IdentityAndAccess\Domain\Services\Interfaces
  */
 interface MapsEventClassName
 {

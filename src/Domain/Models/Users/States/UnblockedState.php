@@ -18,6 +18,11 @@ final class UnblockedState extends AbstractUserState
 		return new BlockedState();
 	}
 
+	public function canBlock() : bool
+	{
+		return true;
+	}
+
 	public function toString() : string
 	{
 		return UserState::UNBLOCKED;

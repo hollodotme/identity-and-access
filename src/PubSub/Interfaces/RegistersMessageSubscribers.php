@@ -5,7 +5,7 @@
 
 namespace hollodotme\PubSub\Interfaces;
 
-use hollodotme\PubSub\Types\MessageName;
+use hollodotme\PubSub\Types\Channel;
 
 /**
  * Interface RegistersMessageSubscribers
@@ -13,5 +13,5 @@ use hollodotme\PubSub\Types\MessageName;
  */
 interface RegistersMessageSubscribers
 {
-	public function subscribe( MessageName $messageName, SubscribesToMessages $subscriber );
+	public function subscribe( Channel $channel, SubscribesToMessages $subscriber );
 }

@@ -3,13 +3,13 @@
  * @author hollodotme
  */
 
-namespace hollodotme\IdentityAndAccess\Application\EventMaps;
+namespace hollodotme\IdentityAndAccess\Domain\Services\EventMaps;
 
 use hollodotme\IdentityAndAccess\Domain\Models\Applications\Events\ApplicationWasRegistered;
 
 /**
  * Class ApplicationsEventMap
- * @package hollodotme\IdentityAndAccess\Application\EventMaps
+ * @package hollodotme\IdentityAndAccess\Domain\Services\EventMaps
  */
 final class ApplicationsEventMap extends AbstractEventMap
 {

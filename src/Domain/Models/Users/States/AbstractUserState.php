@@ -28,6 +28,16 @@ abstract class AbstractUserState implements RepresentsUserState
 		throw new IllegalUserStateTransition();
 	}
 
+	public function canBlock() : bool
+	{
+		return false;
+	}
+
+	public function canUnblock() : bool
+	{
+		return false;
+	}
+
 	public static function fromString( string $stateName ) : RepresentsUserState
 	{
 		switch ( $stateName )

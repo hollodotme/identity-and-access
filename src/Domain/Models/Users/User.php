@@ -44,9 +44,9 @@ final class User extends AbstractAggregateRoot
 	protected function whenUserWasInstalled( UserWasInstalled $event )
 	{
 		$this->tenantId = $event->getTenantId();
-		$this->id       = $event->getId();
-		$this->name     = $event->getName();
-		$this->setState( $event->getState() );
+		$this->id       = $event->getTenantId();
+		$this->name     = $event->getUserName();
+		$this->setState( $event->getUserState() );
 	}
 
 	private function setState( RepresentsUserState $state )
@@ -85,34 +85,22 @@ final class User extends AbstractAggregateRoot
 		$this->setState( $this->state->unblock() );
 	}
 
-	/**
-	 * @return TenantId
-	 */
-	public function getTenantId()
+	public function getTenantId() : TenantId
 	{
 		return $this->tenantId;
 	}
 
-	/**
-	 * @return UserId
-	 */
-	public function getId()
+	public function getId() : UserId
 	{
 		return $this->id;
 	}
 
-	/**
-	 * @return UserName
-	 */
-	public function getName()
+	public function getName() : UserName
 	{
 		return $this->name;
 	}
 
-	/**
-	 * @return RepresentsUserState
-	 */
-	public function getState()
+	public function getState() : RepresentsUserState
 	{
 		return $this->state;
 	}

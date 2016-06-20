@@ -9,24 +9,24 @@ use hollodotme\PubSub\Interfaces\RepresentsValueAsString;
 use hollodotme\PubSub\Traits\Scalarizing;
 
 /**
- * Class MessageName
+ * Class Channel
  * @package hollodotme\PubSub\Types
  */
-final class MessageName implements RepresentsValueAsString
+final class Channel implements RepresentsValueAsString
 {
 	use Scalarizing;
 
 	/** @var string */
-	private $messageName;
+	private $channel;
 
-	public function __construct( string $messageName )
+	public function __construct( string $channel )
 	{
-		$this->messageName = $messageName;
+		$this->channel = $channel;
 	}
 
 	public function toString() : string
 	{
-		return $this->messageName;
+		return $this->channel;
 	}
 
 	public function equalsString( string $other ) : bool

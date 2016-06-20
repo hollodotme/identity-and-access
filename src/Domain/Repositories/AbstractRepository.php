@@ -8,6 +8,8 @@ namespace hollodotme\IdentityAndAccess\Domain\Repositories;
 use hollodotme\EventStore\Interfaces\StoresEventStream;
 use hollodotme\IdentityAndAccess\Domain\Models\AbstractAggregateRoot;
 use hollodotme\PubSub\Interfaces\DispatchesMessages;
+use hollodotme\PubSub\Interfaces\SubscribesToMessages;
+use hollodotme\PubSub\Types\Channel;
 
 /**
  * Class AbstractRepository
@@ -25,6 +27,16 @@ abstract class AbstractRepository
 	{
 		$this->eventStore = $eventStore;
 		$this->messageBus = $messageBus;
+
+		$this->registerSubscribers();
+	}
+
+	private function registerSubscribers()
+	{
+		foreach ( $this->getSubscribers() as $subscriber )
+		{
+			$this->messageBus->subscribe( $this->getSubscriptionChannel(), $subscriber );
+		}
 	}
 
 	final protected function getEventStore() : StoresEventStream
@@ -45,4 +57,11 @@ abstract class AbstractRepository
 
 		$aggregateRoot->clearChanges();
 	}
+
+	/**
+	 * @return array|SubscribesToMessages[]
+	 */
+	abstract protected function getSubscribers() : array;
+
+	abstract protected function getSubscriptionChannel() : Channel;
 }

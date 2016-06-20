@@ -7,15 +7,11 @@ namespace hollodotme\IdentityAndAccess\Domain\Models;
 
 use hollodotme\EventStore\Interfaces\EnclosesEvent;
 use hollodotme\EventStore\Interfaces\ImpliesChange;
-use hollodotme\EventStore\Types\ActorName;
-use hollodotme\EventStore\Types\EventHeader;
 use hollodotme\EventStore\Types\EventStream;
-use hollodotme\EventStore\Types\OccurredOn;
-use hollodotme\EventStore\Types\ServerId;
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\EventStore\Types\StreamSequence;
-use hollodotme\IdentityAndAccess\Domain\EventEnvelope;
 use hollodotme\IdentityAndAccess\Domain\Exceptions\AggregateReconstitutedWithoutHistory;
+use hollodotme\IdentityAndAccess\Domain\Services\EventEnvelopeBuilder;
 
 /**
  * Class AbstractAggregateRoot
@@ -29,13 +25,23 @@ abstract class AbstractAggregateRoot
 	/** @var StreamSequence */
 	private $streamSequence;
 
+	/** @var EventEnvelopeBuilder */
+	private $eventEnvelopeBuilder;
+
 	final protected function __construct()
 	{
-		$this->streamSequence = new StreamSequence( 0 );
-		$this->eventStream    = new EventStream();
+		$this->streamSequence       = new StreamSequence( 0 );
+		$this->eventStream          = new EventStream();
+		$this->eventEnvelopeBuilder = new EventEnvelopeBuilder();
 	}
 
-	final public static function reconstitute( EventStream $eventStream ) : static
+	/**
+	 * @param EventStream $eventStream
+	 *
+	 * @throws AggregateReconstitutedWithoutHistory
+	 * @return static
+	 */
+	final public static function reconstitute( EventStream $eventStream )
 	{
 		if ( $eventStream->isEmpty() )
 		{
@@ -59,7 +65,7 @@ abstract class AbstractAggregateRoot
 
 		$this->streamSequence = $header->getStreamSequence();
 
-		$methodName = 'when%s' . $event->getId()->toString();
+		$methodName = 'when%s' . $event->getEventId()->toString();
 
 		if ( method_exists( $this, $methodName ) )
 		{
@@ -78,16 +84,11 @@ abstract class AbstractAggregateRoot
 
 	final protected function getEventEnvelope( ImpliesChange $event ) : EnclosesEvent
 	{
-		$header = new EventHeader(
+		return $this->eventEnvelopeBuilder->fromEvent(
 			$this->getStreamName(),
-			$event->getStreamId(),
 			$this->streamSequence->increment(),
-			new OccurredOn( new \DateTimeImmutable() ),
-			new ActorName( $_SERVER['USER'] ? : '' ),
-			new ServerId( $_SERVER['SERVER_ADDR'] )
+			$event
 		);
-
-		return new EventEnvelope( $header, $event );
 	}
 
 	protected function getStreamName() : StreamName

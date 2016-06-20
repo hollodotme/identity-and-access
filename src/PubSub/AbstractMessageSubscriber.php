@@ -16,7 +16,7 @@ abstract class AbstractMessageSubscriber implements SubscribesToMessages
 {
 	final public function notify( TransfersInformation $message )
 	{
-		$methodName = 'on' . $message->getMessageName();
+		$methodName = 'on' . $message->getChannel();
 
 		if ( method_exists( $this, $methodName ) )
 		{

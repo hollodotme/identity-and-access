@@ -23,20 +23,22 @@ final class UserWasInstalled extends AbstractDomainEvent
 	private $tenantId;
 
 	/** @var UserId */
-	private $id;
+	private $userId;
 
 	/** @var UserName */
-	private $name;
+	private $userName;
 
 	/** @var RepresentsUserState */
-	private $state;
+	private $userState;
 
-	public function __construct( TenantId $tenantId, UserId $id, UserName $name, RepresentsUserState $state )
+	public function __construct(
+		TenantId $tenantId, UserId $userId, UserName $userName, RepresentsUserState $userState
+	)
 	{
-		$this->tenantId = $tenantId;
-		$this->id       = $id;
-		$this->name     = $name;
-		$this->state    = $state;
+		$this->tenantId  = $tenantId;
+		$this->userId    = $userId;
+		$this->userName  = $userName;
+		$this->userState = $userState;
 	}
 
 	public function getTenantId() : TenantId
@@ -44,41 +46,41 @@ final class UserWasInstalled extends AbstractDomainEvent
 		return $this->tenantId;
 	}
 
-	public function getId() : UserId
+	public function getUserId() : UserId
 	{
-		return $this->id;
+		return $this->userId;
 	}
 
-	public function getName() : UserName
+	public function getUserName() : UserName
 	{
-		return $this->name;
+		return $this->userName;
 	}
 
-	public function getState() : RepresentsUserState
+	public function getUserState() : RepresentsUserState
 	{
-		return $this->state;
+		return $this->userState;
 	}
 
 	public function getStreamId() : StreamId
 	{
-		return new StreamId( $this->id->toString() );
+		return new StreamId( $this->userId->toString() );
 	}
 
 	protected function toPayload() : array
 	{
 		return [
-			'tenantId' => $this->tenantId->toString(),
-			'id'       => $this->id->toString(),
-			'name'     => $this->name->toString(),
-			'state'    => $this->name->toString(),
+			'tenantId'  => $this->tenantId->toString(),
+			'userId'    => $this->userId->toString(),
+			'userName'  => $this->userName->toString(),
+			'userState' => $this->userState->toString(),
 		];
 	}
 
 	protected function fromPayload( array $payload )
 	{
-		$this->tenantId = new TenantId( $payload['tenantId'] );
-		$this->id       = new UserId( $payload['id'] );
-		$this->name     = new UserName( $payload['name'] );
-		$this->state    = AbstractUserState::fromString( $payload['state'] );
+		$this->tenantId  = new TenantId( $payload['tenantId'] );
+		$this->userId    = new UserId( $payload['userId'] );
+		$this->userName  = new UserName( $payload['userName'] );
+		$this->userState = AbstractUserState::fromString( $payload['userState'] );
 	}
 }
