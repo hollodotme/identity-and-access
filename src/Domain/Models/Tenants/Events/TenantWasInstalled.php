@@ -9,7 +9,6 @@ use hollodotme\EventStore\Types\StreamId;
 use hollodotme\IdentityAndAccess\Domain\AbstractDomainEvent;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\AbstractTenantState;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces\RepresentsTenantState;
-use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\TenantState;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\TenantId;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\TenantName;
 
@@ -45,7 +44,7 @@ final class TenantWasInstalled extends AbstractDomainEvent
 		return $this->name;
 	}
 
-	public function getState() : TenantState
+	public function getState() : RepresentsTenantState
 	{
 		return $this->state;
 	}

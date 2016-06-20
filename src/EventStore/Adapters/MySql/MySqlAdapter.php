@@ -6,20 +6,12 @@
 namespace hollodotme\EventStore\Adapters\MySql;
 
 use hollodotme\EventStore\Adapters\MySql\Exceptions\MySqlException;
+use hollodotme\EventStore\Interfaces\BuildsEventEnvelope;
 use hollodotme\EventStore\Interfaces\EnclosesEvent;
-use hollodotme\EventStore\Interfaces\MapsEvent;
 use hollodotme\EventStore\Interfaces\StoresEventStream;
-use hollodotme\EventStore\Types\ActorName;
-use hollodotme\EventStore\Types\EventHeader;
-use hollodotme\EventStore\Types\EventId;
-use hollodotme\EventStore\Types\EventPayload;
 use hollodotme\EventStore\Types\EventStream;
-use hollodotme\EventStore\Types\OccurredOn;
-use hollodotme\EventStore\Types\ServerId;
 use hollodotme\EventStore\Types\StreamId;
 use hollodotme\EventStore\Types\StreamName;
-use hollodotme\EventStore\Types\StreamSequence;
-use hollodotme\IdentityAndAccess\Domain\EventEnvelope;
 
 /**
  * Class EventStore
@@ -33,13 +25,13 @@ final class MySqlAdapter implements StoresEventStream
 	/** @var MySqlManager */
 	private $manager;
 
-	/** @var MapsEvent */
-	private $eventMapper;
+	/** @var BuildsEventEnvelope */
+	private $eventEnvelopeBuilder;
 
-	public function __construct( MySqlConnection $connection, MapsEvent $eventMapper )
+	public function __construct( MySqlConnection $connection, BuildsEventEnvelope $eventEnvelopeBuilder )
 	{
-		$this->connection  = $connection;
-		$this->eventMapper = $eventMapper;
+		$this->connection           = $connection;
+		$this->eventEnvelopeBuilder = $eventEnvelopeBuilder;
 	}
 
 	/**
@@ -159,35 +151,11 @@ final class MySqlAdapter implements StoresEventStream
 
 		$eventStream = new EventStream();
 
-		foreach ( $this->fetchEventEnvelopes( $statement ) as $eventEnvelope )
+		while ( $record = $statement->fetch( \PDO::FETCH_ASSOC ) )
 		{
-			$eventStream->addEventEnvelope( $eventEnvelope );
+			$eventStream->addEventEnvelope( $this->eventEnvelopeBuilder->fromRecord( $record ) );
 		}
 
 		return $eventStream;
-	}
-
-	private function fetchEventEnvelopes( \PDOStatement $statement ) : \Generator
-	{
-		while ( $record = $statement->fetchObject() )
-		{
-			$header = new EventHeader(
-				new StreamName( $record->streamName ),
-				new StreamId( $record->streamId ),
-				new StreamSequence( $record->streamSequence ),
-				OccurredOn::fromDateTimeString( $record->occurredOn ),
-				new ActorName( $record->actorName ),
-				new ServerId( $record->serverId )
-			);
-
-			yield new EventEnvelope(
-				$header,
-				$this->eventMapper->mapEvent(
-					$header,
-					new EventId( $record->eventId ),
-					EventPayload::fromString( $record->eventPayload )
-				)
-			);
-		}
 	}
 }

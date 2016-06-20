@@ -11,6 +11,7 @@ use hollodotme\EventStore\EventStore;
 use hollodotme\IdentityAndAccess\Application\Configs\MySqlConfig;
 use hollodotme\IdentityAndAccess\Domain\Repositories\ApplicationsRepository;
 use hollodotme\IdentityAndAccess\Domain\Repositories\TenantsRepository;
+use hollodotme\IdentityAndAccess\Domain\Repositories\UsersRepository;
 use hollodotme\PubSub\MessageBus;
 
 /**
@@ -30,15 +31,17 @@ final class DomainManager
 
 	public function __construct()
 	{
-		$mySqlConfig  = new MySqlConfig();
-		$connection   = new MySqlConnection(
+		$mySqlConfig = new MySqlConfig();
+		$connection  = new MySqlConnection(
 			$mySqlConfig->getHost(),
 			$mySqlConfig->getPort(),
 			$mySqlConfig->getDatabase(),
 			$mySqlConfig->getUsername(),
 			$mySqlConfig->getPassword()
 		);
-		$mySqlAdapter = new MySqlAdapter( $connection, new EventMapper() );
+
+		$eventEnvelopeBuilder = new EventEnvelopeBuilder( new EventMapper() );
+		$mySqlAdapter         = new MySqlAdapter( $connection, $eventEnvelopeBuilder );
 
 		$this->eventStore   = new EventStore( $mySqlAdapter );
 		$this->messageBus   = new MessageBus();
@@ -67,5 +70,17 @@ final class DomainManager
 		}
 
 		return $this->repositories[ TenantsRepository::class ];
+	}
+
+	public function getusersRepository() : UsersRepository
+	{
+		if ( !isset($this->repositories[ UsersRepository::class ]) )
+		{
+			$this->repositories[ UsersRepository::class ] = new UsersRepository(
+				$this->eventStore, $this->messageBus
+			);
+		}
+
+		return $this->repositories[ UsersRepository::class ];
 	}
 }

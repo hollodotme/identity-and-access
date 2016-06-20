@@ -5,8 +5,10 @@
 
 namespace hollodotme\IdentityAndAccess\Domain\Models\Users;
 
+use hollodotme\IdentityAndAccess\Domain\Models\AbstractAggregateRoot;
 use hollodotme\IdentityAndAccess\Domain\Models\Roles\Role;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\TenantId;
+use hollodotme\IdentityAndAccess\Domain\Models\Users\Events\UserWasInstalled;
 use hollodotme\IdentityAndAccess\Domain\Models\Users\States\Interfaces\RepresentsUserState;
 use hollodotme\IdentityAndAccess\Domain\Models\Users\States\UnblockedState;
 
@@ -14,13 +16,13 @@ use hollodotme\IdentityAndAccess\Domain\Models\Users\States\UnblockedState;
  * Class User
  * @package hollodotme\IdentityAndAccess\Domain\Models\Users
  */
-final class User
+final class User extends AbstractAggregateRoot
 {
 	/** @var TenantId */
 	private $tenantId;
 
 	/** @var UserId */
-	private $userId;
+	private $id;
 
 	/** @var UserName */
 	private $name;
@@ -31,13 +33,20 @@ final class User
 	/** @var array|Role[] */
 	private $roles;
 
-	public function __construct( TenantId $tenantId, UserId $userId, UserName $name )
+	public static function install( TenantId $tenantId, UserId $id, UserName $name ) : self
 	{
-		$this->tenantId = $tenantId;
-		$this->userId   = $userId;
-		$this->name     = $name;
+		$user = new self();
+		$user->trackThat( new UserWasInstalled( $tenantId, $id, $name, new UnblockedState() ) );
 
-		$this->setState( new UnblockedState() );
+		return $user;
+	}
+
+	protected function whenUserWasInstalled( UserWasInstalled $event )
+	{
+		$this->tenantId = $event->getTenantId();
+		$this->id       = $event->getId();
+		$this->name     = $event->getName();
+		$this->setState( $event->getState() );
 	}
 
 	private function setState( RepresentsUserState $state )
@@ -87,9 +96,9 @@ final class User
 	/**
 	 * @return UserId
 	 */
-	public function getUserId()
+	public function getId()
 	{
-		return $this->userId;
+		return $this->id;
 	}
 
 	/**
