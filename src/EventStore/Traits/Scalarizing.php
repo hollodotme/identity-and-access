@@ -5,6 +5,10 @@
 
 namespace hollodotme\EventStore\Traits;
 
+/**
+ * Trait Scalarizing
+ * @package hollodotme\EventStore\Traits
+ */
 trait Scalarizing
 {
 	abstract public function toString() : string;

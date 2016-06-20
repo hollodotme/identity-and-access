@@ -16,14 +16,13 @@ use hollodotme\IdentityAndAccess\Domain\Models\Applications\ApplicationId;
  */
 final class ApplicationsRepository extends AbstractRepository
 {
-	public function findApplicationWithId( ApplicationId $applicationId ) : Application
+	public function findApplicationWithId( ApplicationId $id ) : Application
 	{
 		$eventStream = $this->getEventStore()->retrieveEventStream(
 			new StreamName( 'Application' ),
-			new StreamId( $applicationId->toString() ),
-			$this->getEventMapper()
+			new StreamId( $id->toString() )
 		);
 
-		return new Application( $eventStream );
+		return Application::reconstitute( $eventStream );
 	}
 }

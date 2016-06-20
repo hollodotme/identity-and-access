@@ -5,17 +5,17 @@
 
 namespace hollodotme\IdentityAndAccess\Domain\Models;
 
-use hollodotme\EventStore\EventEnvelope;
-use hollodotme\EventStore\Interfaces\CarriesEventData;
 use hollodotme\EventStore\Interfaces\EnclosesEvent;
+use hollodotme\EventStore\Interfaces\ImpliesChange;
 use hollodotme\EventStore\Types\ActorName;
 use hollodotme\EventStore\Types\EventHeader;
 use hollodotme\EventStore\Types\EventStream;
 use hollodotme\EventStore\Types\OccurredOn;
 use hollodotme\EventStore\Types\ServerId;
-use hollodotme\EventStore\Types\StreamId;
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\EventStore\Types\StreamSequence;
+use hollodotme\IdentityAndAccess\Domain\EventEnvelope;
+use hollodotme\IdentityAndAccess\Domain\Exceptions\AggregateReconstitutedWithoutHistory;
 
 /**
  * Class AbstractAggregateRoot
@@ -23,17 +23,33 @@ use hollodotme\EventStore\Types\StreamSequence;
  */
 abstract class AbstractAggregateRoot
 {
+	/** @var EventStream */
+	private $eventStream;
+
 	/** @var StreamSequence */
 	private $streamSequence;
 
-	final public function __construct( EventStream $eventStream )
+	final protected function __construct()
 	{
 		$this->streamSequence = new StreamSequence( 0 );
+		$this->eventStream    = new EventStream();
+	}
+
+	final public static function reconstitute( EventStream $eventStream ) : static
+	{
+		if ( $eventStream->isEmpty() )
+		{
+			throw new AggregateReconstitutedWithoutHistory();
+		}
+
+		$instance = new static();
 
 		foreach ( $eventStream->getEventEnvelopes() as $eventEnvelope )
 		{
-			$this->apply( $eventEnvelope );
+			$instance->apply( $eventEnvelope );
 		}
+
+		return $instance;
 	}
 
 	private function apply( EnclosesEvent $eventEnvelope )
@@ -43,33 +59,49 @@ abstract class AbstractAggregateRoot
 
 		$this->streamSequence = $header->getStreamSequence();
 
-		$methodName = sprintf( 'when%s', preg_replace( "#Event$#", '', $event->getId()->toString() ) );
+		$methodName = 'when%s' . $event->getId()->toString();
+
 		if ( method_exists( $this, $methodName ) )
 		{
-			call_user_func( $methodName, $event );
+			call_user_func( [ $this, $methodName ], $event );
 		}
 	}
 
-	final public function publish( CarriesEventData $event )
+	final protected function trackThat( ImpliesChange $event )
+	{
+		$eventEnvelope = $this->getEventEnvelope( $event );
+
+		$this->eventStream->addEventEnvelope( $eventEnvelope );
+
+		$this->apply( $eventEnvelope );
+	}
+
+	final protected function getEventEnvelope( ImpliesChange $event ) : EnclosesEvent
 	{
 		$header = new EventHeader(
 			$this->getStreamName(),
-			$this->getStreamId(),
+			$event->getStreamId(),
 			$this->streamSequence->increment(),
 			new OccurredOn( new \DateTimeImmutable() ),
 			new ActorName( $_SERVER['USER'] ? : '' ),
 			new ServerId( $_SERVER['SERVER_ADDR'] )
 		);
 
-		$eventEnvelope = new EventEnvelope( $header, $event );
-
-		$this->apply( $eventEnvelope );
+		return new EventEnvelope( $header, $event );
 	}
 
-	public function getStreamName() : StreamName
+	protected function getStreamName() : StreamName
 	{
 		return StreamName::fromClassName( static::class );
 	}
 
-	abstract public function getStreamId() : StreamId;
+	final public function getChanges() : EventStream
+	{
+		return $this->eventStream;
+	}
+
+	final public function clearChanges()
+	{
+		$this->eventStream = new EventStream();
+	}
 }

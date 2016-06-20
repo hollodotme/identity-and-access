@@ -5,8 +5,12 @@
 
 namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants;
 
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\BlockedState;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Exceptions\IllegalTenantState;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Exceptions\IllegalTenantStateTransition;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces\RepresentsTenantState;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\TenantState;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\UnblockedState;
 use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 
 /**
@@ -25,5 +29,19 @@ abstract class AbstractTenantState implements RepresentsTenantState
 	public function unblock() : RepresentsTenantState
 	{
 		throw new IllegalTenantStateTransition();
+	}
+
+	public static function fromString( string $stateName ) : RepresentsTenantState
+	{
+		switch ( $stateName )
+		{
+			case TenantState::BLOCKED:
+				return new BlockedState();
+
+			case TenantState::UNBLOCKED:
+				return new UnblockedState();
+		}
+
+		throw ( new IllegalTenantState() )->withStateName( $stateName );
 	}
 }

@@ -5,10 +5,8 @@
 
 namespace hollodotme\IdentityAndAccess\Domain\Models\Applications;
 
-use hollodotme\EventStore\Types\EventStream;
-use hollodotme\EventStore\Types\StreamId;
 use hollodotme\IdentityAndAccess\Domain\Models\AbstractAggregateRoot;
-use hollodotme\IdentityAndAccess\Domain\Models\Applications\Events\ApplicationWasRegisteredEvent;
+use hollodotme\IdentityAndAccess\Domain\Models\Applications\Events\ApplicationWasRegistered;
 
 /**
  * Class Application
@@ -17,31 +15,32 @@ use hollodotme\IdentityAndAccess\Domain\Models\Applications\Events\ApplicationWa
 final class Application extends AbstractAggregateRoot
 {
 	/** @var ApplicationId */
-	private $applicationId;
+	private $id;
 
 	/** @var ApplicationName */
 	private $name;
 
-	public static function register( ApplicationId $applicationId, ApplicationName $name ) : self
+	public static function register( ApplicationId $id, ApplicationName $name ) : self
 	{
-		$application = new Application( new EventStream() );
-		$application->publish( new ApplicationWasRegisteredEvent( $applicationId, $name ) );
+		$application = new Application();
+		$application->trackThat( new ApplicationWasRegistered( $id, $name ) );
 
 		return $application;
 	}
 
-	public function getApplicationId() : ApplicationId
+	public function whenApplicationWasRegistered( ApplicationWasRegistered $event )
 	{
-		return $this->applicationId;
+		$this->id   = $event->getId();
+		$this->name = $event->getName();
+	}
+
+	public function getId() : ApplicationId
+	{
+		return $this->id;
 	}
 
 	public function getName() : ApplicationName
 	{
 		return $this->name;
-	}
-
-	public function getStreamId() : StreamId
-	{
-		return new StreamId( $this->applicationId->toString() );
 	}
 }

@@ -15,7 +15,5 @@ use hollodotme\EventStore\Types\StreamName;
  */
 interface RetrievesEventStream
 {
-	public function retrieveEventStream(
-		StreamName $streamName, StreamId $streamId, MapsEvent $eventMapper
-	) : EventStream;
+	public function retrieveEventStream( StreamName $streamName, StreamId $streamId ) : EventStream;
 }

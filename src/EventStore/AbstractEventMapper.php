@@ -7,7 +7,7 @@ namespace hollodotme\EventStore;
 
 use hollodotme\EventStore\Exceptions\EventStoreException;
 use hollodotme\EventStore\Exceptions\MappingEventFailed;
-use hollodotme\EventStore\Interfaces\CarriesEventData;
+use hollodotme\EventStore\Interfaces\ImpliesChange;
 use hollodotme\EventStore\Interfaces\MapsEvent;
 use hollodotme\EventStore\Types\EventHeader;
 use hollodotme\EventStore\Types\EventId;
@@ -20,7 +20,7 @@ use hollodotme\EventStore\Types\StreamName;
  */
 abstract class AbstractEventMapper implements MapsEvent
 {
-	public function mapEvent( EventHeader $header, EventId $eventId, EventPayload $eventPayload ) : CarriesEventData
+	public function mapEvent( EventHeader $header, EventId $eventId, EventPayload $eventPayload ) : ImpliesChange
 	{
 		try
 		{
@@ -49,7 +49,7 @@ abstract class AbstractEventMapper implements MapsEvent
 	 */
 	private function guardEventClassIsValid( \ReflectionClass $eventClass )
 	{
-		if ( !$eventClass->implementsInterface( CarriesEventData::class ) )
+		if ( !$eventClass->implementsInterface( ImpliesChange::class ) )
 		{
 			throw new EventStoreException( 'Invalid event class: ' . $eventClass );
 		}

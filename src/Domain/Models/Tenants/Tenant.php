@@ -5,6 +5,8 @@
 
 namespace hollodotme\IdentityAndAccess\Domain\Models\Tenants;
 
+use hollodotme\IdentityAndAccess\Domain\Models\AbstractAggregateRoot;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\Events\TenantWasInstalled;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\Interfaces\RepresentsTenantState;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\UnblockedState;
 
@@ -12,10 +14,10 @@ use hollodotme\IdentityAndAccess\Domain\Models\Tenants\States\UnblockedState;
  * Class Tenant
  * @package hollodotme\IdentityAndAccess\Domain\Models\Tenants
  */
-final class Tenant
+final class Tenant extends AbstractAggregateRoot
 {
 	/** @var TenantId */
-	private $tenantId;
+	private $id;
 
 	/** @var TenantName */
 	private $name;
@@ -23,12 +25,19 @@ final class Tenant
 	/** @var RepresentsTenantState */
 	private $state;
 
-	public function __construct( TenantId $tenantId, TenantName $name )
+	public static function install( TenantId $id, TenantName $name ) : self
 	{
-		$this->tenantId = $tenantId;
-		$this->name     = $name;
+		$tenant = new self();
+		$tenant->trackThat( new TenantWasInstalled( $id, $name, new UnblockedState() ) );
 
-		$this->setState( new UnblockedState() );
+		return $tenant;
+	}
+
+	protected function whenTenantWasInstalled( TenantWasInstalled $event )
+	{
+		$this->id   = $event->getId();
+		$this->name = $event->getName();
+		$this->setState( $event->getState() );
 	}
 
 	private function setState( RepresentsTenantState $tenantState )
@@ -51,9 +60,9 @@ final class Tenant
 		$this->name = $name;
 	}
 
-	public function getTenantId() : TenantId
+	public function getId() : TenantId
 	{
-		return $this->tenantId;
+		return $this->id;
 	}
 
 	public function getName() : TenantName

@@ -15,5 +15,5 @@ interface EnclosesEvent
 {
 	public function getHeader() : EventHeader;
 
-	public function getEvent() : CarriesEventData;
+	public function getEvent() : ImpliesChange;
 }

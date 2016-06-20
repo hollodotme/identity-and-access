@@ -6,7 +6,6 @@
 namespace hollodotme\EventStore\Adapters\MySql;
 
 use hollodotme\EventStore\Adapters\MySql\Exceptions\MySqlException;
-use hollodotme\EventStore\EventEnvelope;
 use hollodotme\EventStore\Interfaces\EnclosesEvent;
 use hollodotme\EventStore\Interfaces\MapsEvent;
 use hollodotme\EventStore\Interfaces\StoresEventStream;
@@ -20,6 +19,7 @@ use hollodotme\EventStore\Types\ServerId;
 use hollodotme\EventStore\Types\StreamId;
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\EventStore\Types\StreamSequence;
+use hollodotme\IdentityAndAccess\Domain\EventEnvelope;
 
 /**
  * Class EventStore
@@ -33,9 +33,13 @@ final class MySqlAdapter implements StoresEventStream
 	/** @var MySqlManager */
 	private $manager;
 
-	public function __construct( MySqlConnection $connection )
+	/** @var MapsEvent */
+	private $eventMapper;
+
+	public function __construct( MySqlConnection $connection, MapsEvent $eventMapper )
 	{
-		$this->connection = $connection;
+		$this->connection  = $connection;
+		$this->eventMapper = $eventMapper;
 	}
 
 	/**
@@ -137,9 +141,7 @@ final class MySqlAdapter implements StoresEventStream
 		}
 	}
 
-	public function retrieveEventStream(
-		StreamName $streamName, StreamId $streamId, MapsEvent $eventMapper
-	) : EventStream
+	public function retrieveEventStream( StreamName $streamName, StreamId $streamId ) : EventStream
 	{
 		$query = "SELECT streamName, streamId, streamSequence, eventId, eventName, eventPayload, occurredOn, actorName, serverId 
 				  FROM `EventStore`
@@ -157,7 +159,7 @@ final class MySqlAdapter implements StoresEventStream
 
 		$eventStream = new EventStream();
 
-		foreach ( $this->fetchEventEnvelopes( $statement, $eventMapper ) as $eventEnvelope )
+		foreach ( $this->fetchEventEnvelopes( $statement ) as $eventEnvelope )
 		{
 			$eventStream->addEventEnvelope( $eventEnvelope );
 		}
@@ -165,7 +167,7 @@ final class MySqlAdapter implements StoresEventStream
 		return $eventStream;
 	}
 
-	private function fetchEventEnvelopes( \PDOStatement $statement, MapsEvent $eventMapper ) : \Generator
+	private function fetchEventEnvelopes( \PDOStatement $statement ) : \Generator
 	{
 		while ( $record = $statement->fetchObject() )
 		{
@@ -180,7 +182,7 @@ final class MySqlAdapter implements StoresEventStream
 
 			yield new EventEnvelope(
 				$header,
-				$eventMapper->mapEvent(
+				$this->eventMapper->mapEvent(
 					$header,
 					new EventId( $record->eventId ),
 					EventPayload::fromString( $record->eventPayload )

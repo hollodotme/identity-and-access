@@ -3,11 +3,11 @@
  * @author hollodotme
  */
 
-namespace hollodotme\IdentityAndAccess\Traits;
+namespace hollodotme\PubSub\Traits;
 
 /**
  * Trait Scalarizing
- * @package hollodotme\IdentityAndAccess\Traits
+ * @package hollodotme\PubSub\Traits
  */
 trait Scalarizing
 {

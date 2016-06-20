@@ -8,18 +8,21 @@ namespace hollodotme\EventStore\Interfaces;
 use hollodotme\EventStore\Types\EventId;
 use hollodotme\EventStore\Types\EventName;
 use hollodotme\EventStore\Types\EventPayload;
+use hollodotme\EventStore\Types\StreamId;
 
 /**
- * Interface CarriesEventData
+ * Interface ImpliesChange
  * @package hollodotme\EventStore\Interfaces
  */
-interface CarriesEventData
+interface ImpliesChange
 {
+	public function getStreamId() : StreamId;
+
 	public function getId() : EventId;
 
 	public function getName() : EventName;
 
 	public function getPayload() : EventPayload;
 
-	public static function newFromPayload( EventPayload $eventPayload ) : CarriesEventData;
+	public static function newFromPayload( EventPayload $eventPayload ) : ImpliesChange;
 }

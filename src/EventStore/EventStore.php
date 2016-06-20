@@ -5,7 +5,6 @@
 
 namespace hollodotme\EventStore;
 
-use hollodotme\EventStore\Interfaces\MapsEvent;
 use hollodotme\EventStore\Interfaces\StoresEventStream;
 use hollodotme\EventStore\Types\EventStream;
 use hollodotme\EventStore\Types\StreamId;
@@ -20,9 +19,6 @@ final class EventStore implements StoresEventStream
 	/** @var StoresEventStream */
 	private $adapter;
 
-	/**
-	 * @param StoresEventStream $adapter
-	 */
 	public function __construct( StoresEventStream $adapter )
 	{
 		$this->adapter = $adapter;
@@ -33,10 +29,8 @@ final class EventStore implements StoresEventStream
 		$this->adapter->persistEventStream( $eventStream );
 	}
 
-	public function retrieveEventStream(
-		StreamName $streamName, StreamId $streamId, MapsEvent $eventMapper
-	) : EventStream
+	public function retrieveEventStream( StreamName $streamName, StreamId $streamId ) : EventStream
 	{
-		return $this->adapter->retrieveEventStream( $streamName, $streamId, $eventMapper );
+		return $this->adapter->retrieveEventStream( $streamName, $streamId );
 	}
 }

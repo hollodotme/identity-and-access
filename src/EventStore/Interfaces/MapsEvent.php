@@ -15,5 +15,5 @@ use hollodotme\EventStore\Types\EventPayload;
  */
 interface MapsEvent
 {
-	public function mapEvent( EventHeader $header, EventId $eventId, EventPayload $eventPayload ) : CarriesEventData;
+	public function mapEvent( EventHeader $header, EventId $eventId, EventPayload $eventPayload ) : ImpliesChange;
 }
