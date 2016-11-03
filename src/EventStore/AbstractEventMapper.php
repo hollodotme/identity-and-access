@@ -36,7 +36,7 @@ abstract class AbstractEventMapper implements MapsEvent
 		}
 		catch ( \Throwable $e )
 		{
-			throw ( new MappingEventFailed( $e->getMessage() ) )->with( $header->getStreamName(), $eventId );
+			throw (new MappingEventFailed( $e->getMessage() ))->with( $header->getStreamName(), $eventId );
 		}
 	}
 

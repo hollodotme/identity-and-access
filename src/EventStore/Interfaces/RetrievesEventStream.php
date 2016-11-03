@@ -8,6 +8,7 @@ namespace hollodotme\EventStore\Interfaces;
 use hollodotme\EventStore\Types\EventStream;
 use hollodotme\EventStore\Types\StreamId;
 use hollodotme\EventStore\Types\StreamName;
+use hollodotme\EventStore\Types\StreamSequence;
 
 /**
  * Interface RetrievesEventStream
@@ -15,5 +16,11 @@ use hollodotme\EventStore\Types\StreamName;
  */
 interface RetrievesEventStream
 {
-	public function retrieveEventStream( StreamName $streamName, StreamId $streamId ) : EventStream;
+	public function retrieveEntityStream(
+		StreamName $streamName, StreamId $streamId, StreamSequence $fromSequence
+	) : EventStream;
+
+	public function retrieveNamedStream( StreamName $streamName ) : EventStream;
+
+	public function retrieveFullStream() : EventStream;
 }

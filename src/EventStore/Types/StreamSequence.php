@@ -33,4 +33,9 @@ final class StreamSequence implements RepresentsValueAsString
 	{
 		return new self( $this->streamSequence + 1 );
 	}
+
+	public static function fromString( string $sequenceString ) : self
+	{
+		return new self( intval( $sequenceString ) );
+	}
 }
