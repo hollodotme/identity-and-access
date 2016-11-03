@@ -4,9 +4,68 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "52bdca1517a32ad233449f32c79c1c26",
-    "content-hash": "f5f3880749289f225135388d1f64a35c",
-    "packages": [],
+    "hash": "db52daaacc092225245543eb95da2e63",
+    "content-hash": "3030db199d9fc62e877e5a7d1bf4d57e",
+    "packages": [
+        {
+            "name": "icehawk/pubsub",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/icehawk/pubsub.git",
+                "reference": "228a060de21fd68319c46c572f9446d78d533b0d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/icehawk/pubsub/zipball/228a060de21fd68319c46c572f9446d78d533b0d",
+                "reference": "228a060de21fd68319c46c572f9446d78d533b0d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "tm/tooly-composer-script": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "tools": {
+                    "phpunit": {
+                        "url": "https://phar.phpunit.de/phpunit.phar",
+                        "only-dev": true
+                    },
+                    "phpmetrics": {
+                        "url": "https://github.com/phpmetrics/PhpMetrics/raw/master/build/phpmetrics.phar",
+                        "only-dev": true
+                    },
+                    "phpdox": {
+                        "url": "https://github.com/theseer/phpdox/releases/download/0.8.1.1/phpdox-0.8.1.1.phar",
+                        "only-dev": true
+                    },
+                    "coveralls": {
+                        "url": "https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar",
+                        "only-dev": true
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "IceHawk\\PubSub\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "hollodotme"
+                }
+            ],
+            "description": "Publish subscribe component for IceHawk framework",
+            "time": "2016-10-07 00:02:52"
+        }
+    ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",

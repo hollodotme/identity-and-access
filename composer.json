@@ -15,13 +15,13 @@
 		"source": "https://github.com/hollodotme/identity-and-access"
 	},
 	"require": {
-		"php": ">=7.0"
+		"php": ">=7.0",
+		"icehawk/pubsub": "^1.0"
 	},
 	"autoload": {
 		"psr-4": {
 			"hollodotme\\IdentityAndAccess\\": "src/",
-			"hollodotme\\EventStore\\": "src/EventStore/",
-			"hollodotme\\PubSub\\": "src/PubSub/"
+			"hollodotme\\EventStore\\": "src/EventStore/"
 		}
 	},
 	"autoload-dev": {

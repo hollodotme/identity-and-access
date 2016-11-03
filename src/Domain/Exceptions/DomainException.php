@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 /**
- * @author hollodotme
+ * @author: hollodotme
  */
 
 namespace hollodotme\IdentityAndAccess\Domain\Exceptions;
@@ -8,10 +8,10 @@ namespace hollodotme\IdentityAndAccess\Domain\Exceptions;
 use hollodotme\IdentityAndAccess\Exceptions\IdentityAndAccessException;
 
 /**
- * Class AggregateReconstitutedWithoutHistory
+ * Class DomainException
  * @package hollodotme\IdentityAndAccess\Domain\Exceptions
  */
-final class AggregateReconstitutedWithoutHistory extends IdentityAndAccessException
+class DomainException extends IdentityAndAccessException
 {
 
 }

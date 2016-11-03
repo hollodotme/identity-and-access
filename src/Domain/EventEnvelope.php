@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * @author hollodotme
  */
@@ -8,21 +8,20 @@ namespace hollodotme\IdentityAndAccess\Domain;
 use hollodotme\EventStore\Interfaces\EnclosesEvent;
 use hollodotme\EventStore\Interfaces\ImpliesChange;
 use hollodotme\EventStore\Types\EventHeader;
-use hollodotme\PubSub\Interfaces\TransfersInformation;
-use hollodotme\PubSub\Types\Channel;
-use hollodotme\PubSub\Types\MessageId;
+use IceHawk\PubSub\Interfaces\CarriesInformation;
+use IceHawk\PubSub\Interfaces\IdentifiesMessage;
+use IceHawk\PubSub\Interfaces\NamesMessage;
+use IceHawk\PubSub\Types\MessageId;
+use IceHawk\PubSub\Types\MessageName;
 
 /**
  * Class EventEnvelope
  * @package hollodotme\IdentityAndAccess\Domain
  */
-final class EventEnvelope implements EnclosesEvent, TransfersInformation
+final class EventEnvelope implements EnclosesEvent, CarriesInformation
 {
 	/** @var MessageId */
 	private $messageId;
-
-	/** @var Channel */
-	private $channel;
 
 	/** @var EventHeader */
 	private $header;
@@ -37,10 +36,8 @@ final class EventEnvelope implements EnclosesEvent, TransfersInformation
 	public function __construct( EventHeader $header, ImpliesChange $event )
 	{
 		$this->messageId = $this->buildMessageId( $header, $event );
-		$this->channel   = new Channel( $header->getStreamName()->toString() );
-
-		$this->header = $header;
-		$this->event  = $event;
+		$this->header    = $header;
+		$this->event     = $event;
 	}
 
 	private function buildMessageId( EventHeader $header, ImpliesChange $event ) : MessageId
@@ -56,14 +53,14 @@ final class EventEnvelope implements EnclosesEvent, TransfersInformation
 		return new MessageId( $idString );
 	}
 
-	public function getMessageId() : MessageId
+	public function getMessageId() : IdentifiesMessage
 	{
 		return $this->messageId;
 	}
 
-	public function getChannel() : Channel
+	public function getMessageName() : NamesMessage
 	{
-		return $this->channel;
+		return new MessageName( $this->event->getEventName()->toString() );
 	}
 
 	public function getHeader() : EventHeader

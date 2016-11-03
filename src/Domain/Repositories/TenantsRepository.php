@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * @author hollodotme
  */
@@ -9,7 +9,7 @@ use hollodotme\EventStore\Types\StreamId;
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\Tenant;
 use hollodotme\IdentityAndAccess\Domain\Models\Tenants\TenantId;
-use hollodotme\PubSub\Types\Channel;
+use IceHawk\PubSub\Types\Channel;
 
 /**
  * Class TenantsRepository
@@ -19,12 +19,7 @@ final class TenantsRepository extends AbstractRepository
 {
 	const STREAM_NAME = 'Tenant';
 
-	protected function getSubscribers() : array
-	{
-		return [ ];
-	}
-
-	protected function getSubscriptionChannel() : Channel
+	protected function getChannel() : Channel
 	{
 		return new Channel( self::STREAM_NAME );
 	}

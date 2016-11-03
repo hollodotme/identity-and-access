@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * @author hollodotme
  */
@@ -41,6 +41,7 @@ abstract class AbstractDomainEvent implements ImpliesChange
 		$event = ( new \ReflectionClass( static::class ) )->newInstanceWithoutConstructor();
 		$event->fromPayload( $eventPayload->toArray() );
 
+		/** @var ImpliesChange $event */
 		return $event;
 	}
 

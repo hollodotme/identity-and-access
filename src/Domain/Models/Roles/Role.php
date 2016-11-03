@@ -1,52 +1,79 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * @author hollodotme
  */
 
 namespace hollodotme\IdentityAndAccess\Domain\Models\Roles;
 
-use hollodotme\IdentityAndAccess\Domain\Models\Applications\ApplicationId;
+use hollodotme\IdentityAndAccess\Domain\Models\Roles\Exceptions\InvalidRoleString;
+use hollodotme\IdentityAndAccess\Domain\Models\Tenants\TenantId;
+use hollodotme\IdentityAndAccess\Interfaces\RepresentsValueAsString;
+use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 
 /**
  * Class Role
  * @package hollodotme\IdentityAndAccess\Domain\Models\Roles
  */
-final class Role
+final class Role implements RepresentsValueAsString
 {
-	/** @var ApplicationId */
-	private $applicationId;
+	use Scalarizing;
+
+	/** @var TenantId */
+	private $tenantId;
 
 	/** @var RoleName */
-	private $name;
+	private $roleName;
 
-	public function __construct( ApplicationId $applicationId, RoleName $name )
+	/** @var ContextName */
+	private $contextName;
+
+	public function __construct( TenantId $tenantId, RoleName $roleName, ContextName $contextName )
 	{
-		$this->applicationId = $applicationId;
-		$this->name          = $name;
+		$this->tenantId    = $tenantId;
+		$this->roleName    = $roleName;
+		$this->contextName = $contextName;
 	}
 
-	public function getApplicationId() : ApplicationId
+	public function getTenantId(): TenantId
 	{
-		return $this->applicationId;
+		return $this->tenantId;
 	}
 
-	public function getName() : RoleName
+	public function getRoleName(): RoleName
 	{
-		return $this->name;
+		return $this->roleName;
+	}
+
+	public function getContextName(): ContextName
+	{
+		return $this->contextName;
 	}
 
 	public function equals( Role $other ) : bool
 	{
-		if ( $this->applicationId != $other->getApplicationId() )
+		return $other->toString() == $this->toString();
+	}
+
+	public function toString() : string
+	{
+		return sprintf( 'TID:%s[RN:%s]CN:%s', $this->tenantId, $this->roleName, $this->contextName );
+	}
+
+	public static function fromString( string $roleString ) : self
+	{
+		$matches = [];
+
+		if ( preg_match( "#^TID\:([^\[]+)\[RN\:([^\]]+)]CN\:(.+)$#", $roleString, $matches ) )
 		{
-			return false;
+			$role = new self(
+				new TenantId( $matches[1] ),
+				new RoleName( $matches[2] ),
+				new ContextName( $matches[3] )
+			);
+
+			return $role;
 		}
 
-		if ( $this->name != $other->getName() )
-		{
-			return false;
-		}
-
-		return true;
+		throw (new InvalidRoleString())->withRoleString( $roleString );
 	}
 }
