@@ -18,7 +18,7 @@ use hollodotme\IdentityAndAccess\Application\AbstractUserInputValidator;
 
 /**
  * Class RegisterTenantValidator
- * @package hollodotme\IdentityAndAccess\Application\Endpoints\Write\Tenants\Validators
+ * @package hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants\Validators
  */
 final class RegisterTenantValidator extends AbstractUserInputValidator
 {

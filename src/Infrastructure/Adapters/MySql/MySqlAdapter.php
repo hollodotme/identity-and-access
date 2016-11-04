@@ -154,14 +154,17 @@ final class MySqlAdapter implements StoresEventStream
 			]
 		);
 
-		$eventStream = new EventStream();
-
-		while ( $record = $statement->fetch( \PDO::FETCH_ASSOC ) )
-		{
-			$eventStream->addEventEnvelope( $this->eventEnvelopeBuilder->fromRecord( $record ) );
-		}
+		$eventStream = new EventStream( $this->buildEventEnvelopes( $statement ) );
 
 		return $eventStream;
+	}
+
+	private function buildEventEnvelopes( \PDOStatement $statement ) : \Generator
+	{
+		while ( $record = $statement->fetch( \PDO::FETCH_ASSOC ) )
+		{
+			yield $this->eventEnvelopeBuilder->fromRecord( $record );
+		}
 	}
 
 	public function retrieveNamedStream( StreamName $streamName ) : EventStream
@@ -178,12 +181,7 @@ final class MySqlAdapter implements StoresEventStream
 			]
 		);
 
-		$eventStream = new EventStream();
-
-		while ( $record = $statement->fetch( \PDO::FETCH_ASSOC ) )
-		{
-			$eventStream->addEventEnvelope( $this->eventEnvelopeBuilder->fromRecord( $record ) );
-		}
+		$eventStream = new EventStream( $this->buildEventEnvelopes( $statement ) );
 
 		return $eventStream;
 	}
@@ -197,14 +195,8 @@ final class MySqlAdapter implements StoresEventStream
 
 		$statement = $this->getManager()->query( $query );
 
-		$eventStream = new EventStream();
-
-		while ( $record = $statement->fetch( \PDO::FETCH_ASSOC ) )
-		{
-			$eventStream->addEventEnvelope( $this->eventEnvelopeBuilder->fromRecord( $record ) );
-		}
+		$eventStream = new EventStream( $this->buildEventEnvelopes( $statement ) );
 
 		return $eventStream;
 	}
-
 }

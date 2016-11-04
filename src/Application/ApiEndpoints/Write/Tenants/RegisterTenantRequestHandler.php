@@ -3,7 +3,7 @@
  * @author hollodotme
  */
 
-namespace hollodotme\IdentityAndAccess\Application\Endpoints\Write\Tenants;
+namespace hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants;
 
 use hollodotme\IdentityAndAccess\Application\Endpoints\Write\Tenants\Validators\RegisterTenantValidator;
 use hollodotme\IdentityAndAccess\Application\Responses\Json;
@@ -19,7 +19,7 @@ use IceHawk\IceHawk\Interfaces\ProvidesWriteRequestData;
 
 /**
  * Class RegisterTenantRequestHandler
- * @package hollodotme\IdentityAndAccess\Application\Endpoints\Write\Tenants
+ * @package hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants
  */
 final class RegisterTenantRequestHandler extends AbstractPostRequestHandler
 {

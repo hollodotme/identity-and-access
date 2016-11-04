@@ -44,7 +44,7 @@ final class UniqueTenantNameGuard extends AbstractPullView
 		$registeredTenants = [];
 
 		$streamName  = StreamName::fromClassName( Tenant::class );
-		$eventStream = $this->getEventStore()->retrieveNamedStream( $streamName );
+		$eventStream = $this->pullNamedStream( $streamName );
 
 		foreach ( $eventStream->getEventEnvelopes() as $envelope )
 		{

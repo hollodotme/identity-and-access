@@ -14,6 +14,10 @@
 namespace hollodotme\IdentityAndAccess\Application;
 
 use hollodotme\EventStore\EventStore;
+use hollodotme\EventStore\Types\EventStream;
+use hollodotme\EventStore\Types\StreamId;
+use hollodotme\EventStore\Types\StreamName;
+use hollodotme\EventStore\Types\StreamSequence;
 
 /**
  * Class AbstractPullView
@@ -29,8 +33,20 @@ abstract class AbstractPullView
 		$this->eventStore = $eventStore;
 	}
 
-	final protected function getEventStore() : EventStore
+	final protected function pullNamedStream( StreamName $streamName ) : EventStream
 	{
-		return $this->eventStore;
+		return $this->eventStore->retrieveNamedStream( $streamName );
+	}
+
+	final protected function pullEntityStream(
+		StreamName $streamName, StreamId $streamId, StreamSequence $fromSequence
+	): EventStream
+	{
+		return $this->eventStore->retrieveEntityStream( $streamName, $streamId, $fromSequence );
+	}
+
+	final protected function pullFullStream() : EventStream
+	{
+		return $this->eventStore->retrieveFullStream();
 	}
 }

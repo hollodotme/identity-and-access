@@ -13,34 +13,43 @@ use hollodotme\EventStore\Interfaces\EnclosesEvent;
  */
 final class EventStream
 {
-	/** @var array|EnclosesEvent[] */
+	/** @var \Generator|EnclosesEvent[] */
 	private $eventEnvelopes;
 
-	public function __construct()
+	public function __construct( \Generator $eventEnvelopes = null )
 	{
-		$this->flush();
+		$this->eventEnvelopes = $eventEnvelopes;
 	}
 
 	public function addEventEnvelope( EnclosesEvent $eventEnvelope )
 	{
-		$this->eventEnvelopes[] = $eventEnvelope;
+		if ( $this->eventEnvelopes === null )
+		{
+			$this->eventEnvelopes = $this->newEnvelopes( $eventEnvelope );
+		}
+		else
+		{
+			$this->eventEnvelopes = $this->mergeEnvelopes( $this->eventEnvelopes, $eventEnvelope );
+		}
+	}
+
+	private function newEnvelopes( EnclosesEvent $enclosesEvent ) : \Generator
+	{
+		yield $enclosesEvent;
+	}
+
+	private function mergeEnvelopes( \Generator $eventEnvelopes, EnclosesEvent $eventEnvelope ) : \Generator
+	{
+		yield from $eventEnvelopes;
+
+		yield $eventEnvelope;
 	}
 
 	/**
-	 * @return array|EnclosesEvent[]
+	 * @return \Generator|EnclosesEvent[]
 	 */
-	public function getEventEnvelopes() : array
+	public function getEventEnvelopes() : \Generator
 	{
-		return $this->eventEnvelopes;
-	}
-
-	public function isEmpty() : bool
-	{
-		return empty($this->eventEnvelopes);
-	}
-
-	public function flush()
-	{
-		$this->eventEnvelopes = [ ];
+		yield from $this->eventEnvelopes;
 	}
 }

@@ -23,26 +23,39 @@ final class Idendity extends AbstractAggregateRoot
 	/** @var IdentityEmail */
 	private $email;
 
+	/** @var IdentityPasswordHash */
+	private $passwordHash;
+
 	/** @var IdentityName */
 	private $name;
 
 	/** @var array|Role[] */
 	private $roles;
 
-	public static function register( IdentityId $id, IdentityEmail $email, IdentityName $name ) : self
+	/** @var array|IdentityProperty[] */
+	private $properties;
+
+	public static function register(
+		IdentityId $id,
+		IdentityEmail $email,
+		IdentityPasswordHash $passwordHash,
+		IdentityName $name
+	) : self
 	{
 		$identity = new self();
-		$identity->trackThat( new IdentityWasRegistered( $id, $email, $name ) );
+		$identity->trackThat( new IdentityWasRegistered( $id, $email, $passwordHash, $name ) );
 
 		return $identity;
 	}
 
 	protected function whenIdentityWasRegistered( IdentityWasRegistered $event )
 	{
-		$this->id    = $event->getIdidentityId();
-		$this->email = $event->getIdentityEmail();
-		$this->name  = $event->getIdentityName();
-		$this->roles = [];
+		$this->id           = $event->getIdidentityId();
+		$this->email        = $event->getIdentityEmail();
+		$this->passwordHash = $event->getIdentityPasswordHash();
+		$this->name         = $event->getIdentityName();
+		$this->roles        = [];
+		$this->properties   = [];
 	}
 
 	public function assignRole( Role $role )

@@ -43,16 +43,18 @@ abstract class AbstractAggregateRoot
 	 */
 	final public static function reconstitute( EventStream $eventStream )
 	{
-		if ( $eventStream->isEmpty() )
-		{
-			throw new AggregateReconstitutedWithoutHistory();
-		}
-
-		$instance = new static();
+		$appliedEnvelopes = 0;
+		$instance         = new static();
 
 		foreach ( $eventStream->getEventEnvelopes() as $eventEnvelope )
 		{
 			$instance->apply( $eventEnvelope );
+			$appliedEnvelopes++;
+		}
+
+		if ( 0 === $appliedEnvelopes )
+		{
+			throw new AggregateReconstitutedWithoutHistory();
 		}
 
 		return $instance;

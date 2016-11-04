@@ -5,30 +5,27 @@
 
 namespace hollodotme\IdentityAndAccess\Application\WriteModel\Identities;
 
-use hollodotme\IdentityAndAccess\Application\Traits\UUIDGenerating;
 use hollodotme\IdentityAndAccess\Interfaces\RepresentsValueAsString;
-use hollodotme\IdentityAndAccess\StandardTypes\UUID;
 use hollodotme\IdentityAndAccess\Traits\Scalarizing;
 
 /**
- * Class IdentityId
+ * Class IdentityPassword
  * @package hollodotme\IdentityAndAccess\Application\WriteModel\Identities
  */
-final class IdentityId implements RepresentsValueAsString
+final class IdentityPasswordHash implements RepresentsValueAsString
 {
 	use Scalarizing;
-	use UUIDGenerating;
 
-	/** @var UUID */
-	private $identityId;
+	/** @var string */
+	private $passwordHash;
 
-	public function __construct( UUID $identityId )
+	public function __construct( $passwordHash )
 	{
-		$this->identityId = $identityId;
+		$this->passwordHash = $passwordHash;
 	}
 
 	public function toString() : string
 	{
-		return $this->identityId->toString();
+		return $this->passwordHash;
 	}
 }
