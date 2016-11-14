@@ -45,4 +45,21 @@ final class TenantsProjector extends AbstractPushView
 	{
 		return json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
 	}
+
+	protected function whenTenantWasBlocked( EventEnvelope $envelope )
+	{
+		/** @var TenantWasRegistered $event */
+		$event = $envelope->getEvent();
+
+		$this->redisManager->hSet(
+			'tenants',
+			$event->getTenantName()->toString(),
+			$this->getJsonString(
+				[
+					'id'    => $event->getTenantId()->toString(),
+					'state' => $event->getTenantState()->toString(),
+				]
+			)
+		);
+	}
 }
