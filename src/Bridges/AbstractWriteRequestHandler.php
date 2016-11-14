@@ -6,14 +6,14 @@
 namespace hollodotme\IdentityAndAccess\Bridges;
 
 use hollodotme\IdentityAndAccess\Env;
-use IceHawk\IceHawk\Interfaces\HandlesPostRequest;
+use IceHawk\IceHawk\Interfaces\HandlesWriteRequest;
 use IceHawk\IceHawk\Interfaces\ProvidesWriteRequestData;
 
 /**
- * Class AbstractPostRequestHandler
+ * Class AbstractWriteRequestHandler
  * @package hollodotme\IdentityAndAccess\Bridges
  */
-abstract class AbstractPostRequestHandler implements HandlesPostRequest
+abstract class AbstractWriteRequestHandler implements HandlesWriteRequest
 {
 	/** @var Env */
 	private $env;

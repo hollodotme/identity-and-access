@@ -6,17 +6,17 @@
 namespace hollodotme\IdentityAndAccess\Infrastructure\Configs;
 
 /**
- * Class MySqlConfig
+ * Class EventStoreMySqlConfig
  * @package hollodotme\IdentityAndAccess\Infrastructure\Configs
  */
-final class MySqlConfig
+final class EventStoreMySqlConfig
 {
 	/** @var array */
 	private $configData;
 
 	public function __construct()
 	{
-		$this->configData = require(__DIR__ . '/../../../configs/MySql.php');
+		$this->configData = require(__DIR__ . '/../../../configs/EventStoreMySql.php');
 	}
 
 	public function getHost() : string

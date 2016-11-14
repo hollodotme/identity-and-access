@@ -49,16 +49,16 @@
         },
         {
             "name": "icehawk/icehawk",
-            "version": "v2.0.2",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/icehawk/icehawk.git",
-                "reference": "550b60abac427ee87fb8a35bdcf787dd695757a9"
+                "reference": "6762cc4fb11811916f9bb11da0c283884398c2d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/icehawk/icehawk/zipball/550b60abac427ee87fb8a35bdcf787dd695757a9",
-                "reference": "550b60abac427ee87fb8a35bdcf787dd695757a9",
+                "url": "https://api.github.com/repos/icehawk/icehawk/zipball/6762cc4fb11811916f9bb11da0c283884398c2d5",
+                "reference": "6762cc4fb11811916f9bb11da0c283884398c2d5",
                 "shasum": ""
             },
             "require": {
@@ -114,7 +114,7 @@
                 }
             ],
             "description": "Lightweight PHP routing framework, respecting CQRS",
-            "time": "2016-11-03 13:27:02"
+            "time": "2016-11-12 21:26:59"
         },
         {
             "name": "icehawk/pubsub",

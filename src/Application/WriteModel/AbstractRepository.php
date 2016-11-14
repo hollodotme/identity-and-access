@@ -6,6 +6,7 @@
 namespace hollodotme\IdentityAndAccess\Application\WriteModel;
 
 use hollodotme\EventStore\Interfaces\StoresEventStream;
+use hollodotme\EventStore\Types\EventStream;
 use IceHawk\PubSub\Interfaces\DispatchesMessages;
 use IceHawk\PubSub\Types\Channel;
 
@@ -34,11 +35,18 @@ abstract class AbstractRepository
 
 	final public function saveChanges( AbstractAggregateRoot $aggregateRoot )
 	{
-		$eventStream = $aggregateRoot->getChanges();
+		$eventStream        = $aggregateRoot->getChanges();
+		$eventEnvelopes     = iterator_to_array( $eventStream->getEventEnvelopes() );
+		$persistEventStream = new EventStream();
 
-		$this->eventStore->persistEventStream( $eventStream );
+		foreach ( $eventEnvelopes as $envelope )
+		{
+			$persistEventStream->addEventEnvelope( $envelope );
+		}
 
-		foreach ( $eventStream as $eventEnvelope )
+		$this->eventStore->persistEventStream( $persistEventStream );
+
+		foreach ( $eventEnvelopes as $eventEnvelope )
 		{
 			$this->messageBus->publish( $this->getChannel(), $eventEnvelope );
 		}

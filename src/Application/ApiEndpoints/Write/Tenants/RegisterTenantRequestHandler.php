@@ -11,17 +11,18 @@ use hollodotme\IdentityAndAccess\Application\Responses\OK;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\RegisterTenantCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\TenantName;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Validation\Exceptions\TenantNameAlreadyRegistered;
-use hollodotme\IdentityAndAccess\Bridges\AbstractPostRequestHandler;
+use hollodotme\IdentityAndAccess\Bridges\AbstractWriteRequestHandler;
 use hollodotme\IdentityAndAccess\Bridges\UserInput;
 use hollodotme\IdentityAndAccess\Env;
 use IceHawk\IceHawk\Constants\HttpCode;
+use IceHawk\IceHawk\Interfaces\HandlesPostRequest;
 use IceHawk\IceHawk\Interfaces\ProvidesWriteRequestData;
 
 /**
  * Class RegisterTenantRequestHandler
  * @package hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants
  */
-final class RegisterTenantRequestHandler extends AbstractPostRequestHandler
+final class RegisterTenantRequestHandler extends AbstractWriteRequestHandler implements HandlesPostRequest
 {
 	public function handleRequest( ProvidesWriteRequestData $request, Env $env )
 	{
@@ -52,7 +53,7 @@ final class RegisterTenantRequestHandler extends AbstractPostRequestHandler
 					$e->getTenantName() . ' is already registered with ID: ' . $e->getTenantId(),
 				],
 			];
-			
+
 			(new Json())->respond( $message, HttpCode::BAD_REQUEST );
 		}
 	}

@@ -60,7 +60,9 @@ final class EventEnvelope implements EnclosesEvent, CarriesInformation
 
 	public function getMessageName() : NamesMessage
 	{
-		return new MessageName( $this->event->getEventName()->toString() );
+		$messageName = new MessageName( $this->event->getEventName()->toString() );
+
+		return $messageName;
 	}
 
 	public function getHeader() : EventHeader

@@ -6,14 +6,14 @@
 namespace hollodotme\IdentityAndAccess\Bridges;
 
 use hollodotme\IdentityAndAccess\Env;
-use IceHawk\IceHawk\Interfaces\HandlesGetRequest;
+use IceHawk\IceHawk\Interfaces\HandlesReadRequest;
 use IceHawk\IceHawk\Interfaces\ProvidesReadRequestData;
 
 /**
- * Class AbstractGetRequestHandler
+ * Class AbstractReadRequestHandler
  * @package hollodotme\IdentityAndAccess\Bridges
  */
-abstract class AbstractGetRequestHandler implements HandlesGetRequest
+abstract class AbstractReadRequestHandler implements HandlesReadRequest
 {
 	/** @var Env */
 	private $env;
