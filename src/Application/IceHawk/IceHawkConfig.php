@@ -5,8 +5,11 @@
 
 namespace hollodotme\IdentityAndAccess\Application\IceHawk;
 
+use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Tenants\ListTenantsRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Identities\RegisterIdentityRequestHandler;
+use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants\BlockTenantRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants\RegisterTenantRequestHandler;
+use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants\UnblockTenantRequestHandler;
 use hollodotme\IdentityAndAccess\Env;
 use IceHawk\IceHawk\Defaults\Traits\DefaultEventSubscribing;
 use IceHawk\IceHawk\Defaults\Traits\DefaultFinalReadResponding;
@@ -14,6 +17,8 @@ use IceHawk\IceHawk\Defaults\Traits\DefaultFinalWriteResponding;
 use IceHawk\IceHawk\Defaults\Traits\DefaultRequestInfoProviding;
 use IceHawk\IceHawk\Interfaces\ConfiguresIceHawk;
 use IceHawk\IceHawk\Routing\Patterns\RegExp;
+use IceHawk\IceHawk\Routing\ReadRoute;
+use IceHawk\IceHawk\Routing\ReadRouteGroup;
 use IceHawk\IceHawk\Routing\WriteRoute;
 use IceHawk\IceHawk\Routing\WriteRouteGroup;
 
@@ -39,7 +44,16 @@ final class IceHawkConfig implements ConfiguresIceHawk
 	public function getReadRoutes()
 	{
 		return [
-
+			# REST API
+			new ReadRouteGroup(
+				new RegExp( '#^/api/v1/#' ),
+				[
+					new ReadRoute(
+						new RegExp( '#/tenant/list/?#' ),
+						new ListTenantsRequestHandler( $this->env )
+					),
+				]
+			),
 		];
 	}
 
@@ -50,8 +64,22 @@ final class IceHawkConfig implements ConfiguresIceHawk
 			new WriteRouteGroup(
 				new RegExp( '#^/api/v1/#' ),
 				[
-					new WriteRoute( new RegExp( '#/tenant/?$#' ), new RegisterTenantRequestHandler( $this->env ) ),
-					new WriteRoute( new RegExp( '#/identity/?$#' ), new RegisterIdentityRequestHandler( $this->env ) ),
+					new WriteRoute(
+						new RegExp( '#/tenant/?$#' ),
+						new RegisterTenantRequestHandler( $this->env )
+					),
+					new WriteRoute(
+						new RegExp( '#/tenant/block/?$#' ),
+						new BlockTenantRequestHandler( $this->env )
+					),
+					new WriteRoute(
+						new RegExp( '#/tenant/unblock/?$#' ),
+						new UnblockTenantRequestHandler( $this->env )
+					),
+					new WriteRoute(
+						new RegExp( '#/identity/?$#' ),
+						new RegisterIdentityRequestHandler( $this->env )
+					),
 				]
 			),
 		];

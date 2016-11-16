@@ -9,8 +9,12 @@ use hollodotme\EventStore\EventStore;
 use hollodotme\IdentityAndAccess\Application\Constants\Stream;
 use hollodotme\IdentityAndAccess\Application\ReadModel\Tenants\TenantsProjector;
 use hollodotme\IdentityAndAccess\Application\Services\EventEnvelopeBuilder;
+use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\BlockTenantCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\RegisterTenantCommandHandler;
+use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\UnblockTenantCommandHandler;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\BlockTenantCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\RegisterTenantCommand;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\UnblockTenantCommand;
 use hollodotme\IdentityAndAccess\Infrastructure\Adapters\MySql\MySqlAdapter;
 use hollodotme\IdentityAndAccess\Infrastructure\Adapters\MySql\MySqlConnection;
 use hollodotme\IdentityAndAccess\Infrastructure\Adapters\Redis\RedisConnection;
@@ -57,9 +61,12 @@ final class Env extends AbstractObjectPool
 			function ()
 			{
 				$commandBus = new CommandBus();
-				$commandBus->registerCommandHandler(
-					RegisterTenantCommand::class,
-					RegisterTenantCommandHandler::class
+				$commandBus->registerCommandHandlers(
+					[
+						RegisterTenantCommand::class => RegisterTenantCommandHandler::class,
+						BlockTenantCommand::class    => BlockTenantCommandHandler::class,
+						UnblockTenantCommand::class  => UnblockTenantCommandHandler::class,
+					]
 				);
 
 				return $commandBus;

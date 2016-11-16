@@ -14,10 +14,10 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\TenantName;
 use hollodotme\IdentityAndAccess\StandardTypes\UUID;
 
 /**
- * Class TenantWasBlocked
+ * Class TenantWasUnblocked
  * @package hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events
  */
-final class TenantWasBlocked extends AbstractDomainEvent
+final class TenantWasUnblocked extends AbstractDomainEvent
 {
 	/** @var TenantId */
 	private $tenantId;

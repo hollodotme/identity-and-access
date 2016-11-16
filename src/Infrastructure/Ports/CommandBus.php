@@ -35,6 +35,14 @@ final class CommandBus
 		$this->commandHandlerMap = [];
 	}
 
+	public function registerCommandHandlers( array $commandHandlerMap )
+	{
+		foreach ( $commandHandlerMap as $commandClass => $commandHandlerClass )
+		{
+			$this->registerCommandHandler( $commandClass, $commandHandlerClass );
+		}
+	}
+
 	public function registerCommandHandler( string $commandClass, string $commandHandlerClass )
 	{
 		$this->commandHandlerMap[ $commandClass ] = $commandHandlerClass;
@@ -46,7 +54,7 @@ final class CommandBus
 
 		$this->guardCommandHandlerIsValid( $commandHandler );
 
-		call_user_func( [$commandHandler, self::COMMAND_HANDLE_METHOD], $command );
+		call_user_func( [ $commandHandler, self::COMMAND_HANDLE_METHOD ], $command );
 	}
 
 	private function getCommandHandlerForCommand( CarriesInstruction $command, Env $env ) : HandlesCommand
@@ -66,7 +74,7 @@ final class CommandBus
 
 	private function guardCommandHandlerIsValid( HandlesCommand $commandHandler )
 	{
-		if ( !is_callable( [$commandHandler, self::COMMAND_HANDLE_METHOD] ) )
+		if ( !is_callable( [ $commandHandler, self::COMMAND_HANDLE_METHOD ] ) )
 		{
 			throw (new InvalidCommandHandler())->withCommandHandlerClass( get_class( $commandHandler ) );
 		}

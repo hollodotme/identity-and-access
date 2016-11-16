@@ -8,6 +8,7 @@ namespace hollodotme\IdentityAndAccess\Application\ReadModel\Tenants;
 use hollodotme\IdentityAndAccess\Application\AbstractPushView;
 use hollodotme\IdentityAndAccess\Application\WriteModel\EventEnvelope;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasRegistered;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasUnblocked;
 use hollodotme\IdentityAndAccess\Infrastructure\Adapters\Redis\RedisManager;
 
 /**
@@ -31,10 +32,10 @@ final class TenantsProjector extends AbstractPushView
 
 		$this->redisManager->hSet(
 			'tenants',
-			$event->getTenantName()->toString(),
+			$event->getTenantId()->toString(),
 			$this->getJsonString(
 				[
-					'id'    => $event->getTenantId()->toString(),
+					'name'  => $event->getTenantName()->toString(),
 					'state' => $event->getTenantState()->toString(),
 				]
 			)
@@ -53,10 +54,27 @@ final class TenantsProjector extends AbstractPushView
 
 		$this->redisManager->hSet(
 			'tenants',
-			$event->getTenantName()->toString(),
+			$event->getTenantId()->toString(),
 			$this->getJsonString(
 				[
-					'id'    => $event->getTenantId()->toString(),
+					'id'    => $event->getTenantName()->toString(),
+					'state' => $event->getTenantState()->toString(),
+				]
+			)
+		);
+	}
+
+	protected function whenTenantWasUnblocked( EventEnvelope $envelope )
+	{
+		/** @var TenantWasUnblocked $event */
+		$event = $envelope->getEvent();
+
+		$this->redisManager->hSet(
+			'tenants',
+			$event->getTenantId()->toString(),
+			$this->getJsonString(
+				[
+					'id'    => $event->getTenantName()->toString(),
 					'state' => $event->getTenantState()->toString(),
 				]
 			)

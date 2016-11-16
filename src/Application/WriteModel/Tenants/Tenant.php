@@ -8,6 +8,7 @@ namespace hollodotme\IdentityAndAccess\Application\WriteModel\Tenants;
 use hollodotme\IdentityAndAccess\Application\WriteModel\AbstractAggregateRoot;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasBlocked;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasRegistered;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasUnblocked;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\States\Interfaces\RepresentsTenantState;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\States\UnblockedState;
 
@@ -52,6 +53,16 @@ final class Tenant extends AbstractAggregateRoot
 	}
 
 	protected function whenTenantWasBlocked( TenantWasBlocked $event )
+	{
+		$this->setState( $event->getTenantState() );
+	}
+
+	public function unblock()
+	{
+		$this->trackThat( new TenantWasUnblocked( $this->id, $this->name, $this->state->unblock() ) );
+	}
+
+	protected function whenTenantWasUnblocked( TenantWasUnblocked $event )
 	{
 		$this->setState( $event->getTenantState() );
 	}

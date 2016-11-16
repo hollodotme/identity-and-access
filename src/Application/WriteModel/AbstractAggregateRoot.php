@@ -67,9 +67,9 @@ abstract class AbstractAggregateRoot
 
 		$this->streamSequence = $header->getStreamSequence();
 
-		$methodName = 'when%s' . $event->getEventId()->toString();
+		$methodName = 'when' . $event->getEventId()->toString();
 
-		if ( method_exists( $this, $methodName ) )
+		if ( is_callable( [ $this, $methodName ] ) )
 		{
 			call_user_func( [ $this, $methodName ], $event );
 		}
