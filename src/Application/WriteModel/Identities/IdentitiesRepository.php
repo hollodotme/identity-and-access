@@ -24,7 +24,7 @@ final class IdentitiesRepository extends AbstractRepository
 		return new Channel( self::STREAM_NAME );
 	}
 
-	public function findIdentityWithId( IdentityId $identityId ) : Idendity
+	public function findIdentityWithId( IdentityId $identityId ) : Identity
 	{
 		$eventStream = $this->getEventStore()->retrieveEntityStream(
 			new StreamName( self::STREAM_NAME ),
@@ -32,6 +32,6 @@ final class IdentitiesRepository extends AbstractRepository
 			new StreamSequence( 0 )
 		);
 
-		return Idendity::reconstitute( $eventStream );
+		return Identity::reconstitute( $eventStream );
 	}
 }

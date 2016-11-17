@@ -12,10 +12,10 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\Roles\Exceptions\RoleAlr
 use hollodotme\IdentityAndAccess\Application\WriteModel\Roles\Role;
 
 /**
- * Class Idendity
+ * Class Identity
  * @package hollodotme\IdentityAndAccess\Application\WriteModel\Identities
  */
-final class Idendity extends AbstractAggregateRoot
+final class Identity extends AbstractAggregateRoot
 {
 	/** @var IdentityId */
 	private $id;

@@ -10,9 +10,11 @@ use hollodotme\IdentityAndAccess\Application\Constants\Stream;
 use hollodotme\IdentityAndAccess\Application\ReadModel\Tenants\TenantsProjector;
 use hollodotme\IdentityAndAccess\Application\Services\EventEnvelopeBuilder;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\BlockTenantCommandHandler;
+use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\RegisterIdentityCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\RegisterTenantCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\UnblockTenantCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\BlockTenantCommand;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\RegisterIdentityCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\RegisterTenantCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\UnblockTenantCommand;
 use hollodotme\IdentityAndAccess\Infrastructure\Adapters\MySql\MySqlAdapter;
@@ -63,9 +65,10 @@ final class Env extends AbstractObjectPool
 				$commandBus = new CommandBus();
 				$commandBus->registerCommandHandlers(
 					[
-						RegisterTenantCommand::class => RegisterTenantCommandHandler::class,
-						BlockTenantCommand::class    => BlockTenantCommandHandler::class,
-						UnblockTenantCommand::class  => UnblockTenantCommandHandler::class,
+						RegisterTenantCommand::class   => RegisterTenantCommandHandler::class,
+						BlockTenantCommand::class      => BlockTenantCommandHandler::class,
+						UnblockTenantCommand::class    => UnblockTenantCommandHandler::class,
+						RegisterIdentityCommand::class => RegisterIdentityCommandHandler::class,
 					]
 				);
 

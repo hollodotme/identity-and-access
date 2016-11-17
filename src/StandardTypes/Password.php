@@ -5,6 +5,8 @@
 
 namespace hollodotme\IdentityAndAccess\StandardTypes;
 
+use hollodotme\IdentityAndAccess\Interfaces\GuardsPasswordPolicy;
+
 /**
  * Class Password
  * @package hollodotme\IdentityAndAccess\StandardTypes
@@ -14,7 +16,10 @@ final class Password
 	/** @var string */
 	private $passphrase;
 
-	public function __construct( string $passphrase )
+	/** @var GuardsPasswordPolicy */
+	private $policy;
+
+	public function __construct( string $passphrase, GuardsPasswordPolicy $policy )
 	{
 		$this->passphrase = $passphrase;
 	}

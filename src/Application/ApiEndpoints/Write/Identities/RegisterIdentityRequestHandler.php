@@ -18,6 +18,5 @@ final class RegisterIdentityRequestHandler extends AbstractWriteRequestHandler i
 {
 	public function handleRequest( ProvidesWriteRequestData $request, Env $env )
 	{
-		// TODO: Implement handleRequest() method.
 	}
 }
