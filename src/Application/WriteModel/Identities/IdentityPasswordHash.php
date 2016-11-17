@@ -19,7 +19,7 @@ final class IdentityPasswordHash implements RepresentsValueAsString
 	/** @var string */
 	private $passwordHash;
 
-	public function __construct( $passwordHash )
+	public function __construct( string $passwordHash )
 	{
 		$this->passwordHash = $passwordHash;
 	}

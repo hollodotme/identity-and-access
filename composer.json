@@ -28,7 +28,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"hollodotme\\IdentityAndAccess\\Tests\\Unit\\": "tests/unit/"
+			"hollodotme\\IdentityAndAccess\\Tests\\": "tests/"
 		}
 	}
 }

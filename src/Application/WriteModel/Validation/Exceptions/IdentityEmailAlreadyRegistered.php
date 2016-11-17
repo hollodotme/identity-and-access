@@ -5,6 +5,7 @@
 
 namespace hollodotme\IdentityAndAccess\Application\WriteModel\Validation\Exceptions;
 
+use hollodotme\IdentityAndAccess\Application\Exceptions\ApplicationException;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityEmail;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityId;
 
@@ -12,7 +13,7 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityId;
  * Class IdentityEmailAlreadyRegistered
  * @package hollodotme\IdentityAndAccess\Application\WriteModel\Validation\Exceptions
  */
-final class IdentityEmailAlreadyRegistered
+final class IdentityEmailAlreadyRegistered extends ApplicationException
 {
 	/** @var IdentityEmail */
 	private $identityEmail;
@@ -23,6 +24,11 @@ final class IdentityEmailAlreadyRegistered
 	public function getIdentityEmail(): IdentityEmail
 	{
 		return $this->identityEmail;
+	}
+
+	public function getIdentityId(): IdentityId
+	{
+		return $this->identityId;
 	}
 
 	public function withIdentityEmailAndId(

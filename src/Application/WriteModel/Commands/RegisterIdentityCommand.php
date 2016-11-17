@@ -8,12 +8,13 @@ namespace hollodotme\IdentityAndAccess\Application\WriteModel\Commands;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityEmail;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityName;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityPasswordHash;
+use hollodotme\IdentityAndAccess\Infrastructure\Ports\CommandBus\Interfaces\CarriesInstruction;
 
 /**
  * Class RegisterIdentityCommand
  * @package hollodotme\IdentityAndAccess\Application\WriteModel\Commands
  */
-final class RegisterIdentityCommand
+final class RegisterIdentityCommand implements CarriesInstruction
 {
 	/** @var IdentityEmail */
 	private $email;
