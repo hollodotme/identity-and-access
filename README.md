@@ -53,3 +53,113 @@ Content-Type: application/json; charset=utf-8
     ]
 }
 ```
+
+### Block a tenant
+
+#### Request
+
+```HTTP
+POST http://www.identity-and-access.de/api/v1/tenant/block
+tenantId=332894d2-3ce3-40c9-956b-efdd9b96523e
+```
+
+#### Responses
+
+##### Success
+
+```HTTP
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+OK
+```
+
+##### Error, tenant ID is malformed
+
+```HTTP
+HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf-8
+{
+    "tenantId": [
+        "Tenant ID must be a valid UUID string."
+    ]
+}
+```
+
+##### Error, tenant ID not found
+
+```HTTP
+HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf-8
+{
+    "tenantId": [
+        "332894d2-3ce3-40c9-956b-efdd9b96523e not found."
+    ]
+}
+```
+
+##### Error, tenant illegal state transition (tenant is already blocked)
+
+```HTTP
+HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf-8
+{
+    "tenantState": [
+        "Illegal tenant state transition."
+    ]
+}
+```
+
+### Unblock a tenant
+
+#### Request
+
+```HTTP
+POST http://www.identity-and-access.de/api/v1/tenant/unblock
+tenantId=332894d2-3ce3-40c9-956b-efdd9b96523e
+```
+
+#### Responses
+
+##### Success
+
+```HTTP
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+OK
+```
+
+##### Error, tenant ID is malformed
+
+```HTTP
+HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf-8
+{
+    "tenantId": [
+        "Tenant ID must be a valid UUID string."
+    ]
+}
+```
+
+##### Error, tenant ID not found
+
+```HTTP
+HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf-8
+{
+    "tenantId": [
+        "332894d2-3ce3-40c9-956b-efdd9b96523e not found."
+    ]
+}
+```
+
+##### Error, tenant illegal state transition (tenant is already unblocked)
+
+```HTTP
+HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf-8
+{
+    "tenantState": [
+        "Illegal tenant state transition."
+    ]
+}
+```

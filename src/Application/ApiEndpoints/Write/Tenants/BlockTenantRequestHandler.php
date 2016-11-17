@@ -55,7 +55,7 @@ final class BlockTenantRequestHandler extends AbstractWriteRequestHandler implem
 		}
 		catch ( IllegalTenantStateTransition $e )
 		{
-			$message = [ 'state' => [ 'Illegal tenant state transition.' ] ];
+			$message = [ 'tenantState' => [ 'Illegal tenant state transition.' ] ];
 			(new Json())->respond( $message, HttpCode::BAD_REQUEST );
 		}
 	}
