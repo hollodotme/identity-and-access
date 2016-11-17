@@ -57,7 +57,7 @@ final class TenantsProjector extends AbstractPushView
 			$event->getTenantId()->toString(),
 			$this->getJsonString(
 				[
-					'id'    => $event->getTenantName()->toString(),
+					'name'  => $event->getTenantName()->toString(),
 					'state' => $event->getTenantState()->toString(),
 				]
 			)
@@ -74,7 +74,7 @@ final class TenantsProjector extends AbstractPushView
 			$event->getTenantId()->toString(),
 			$this->getJsonString(
 				[
-					'id'    => $event->getTenantName()->toString(),
+					'name'  => $event->getTenantName()->toString(),
 					'state' => $event->getTenantState()->toString(),
 				]
 			)

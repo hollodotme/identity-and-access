@@ -163,3 +163,80 @@ Content-Type: application/json; charset=utf-8
     ]
 }
 ```
+
+### List tenants
+
+#### Request (all tenants)
+
+```HTTP
+GET http://www.identity-and-access.de/api/v1/tenant/list
+```
+
+#### Request (tenants with state blocked)
+
+```HTTP
+GET http://www.identity-and-access.de/api/v1/tenant/list?states[]=blocked
+```
+
+#### Request (tenants with state unblocked)
+
+```HTTP
+GET http://www.identity-and-access.de/api/v1/tenant/list?states[]=unblocked
+```
+
+#### Responses
+
+##### Success
+
+```HTTP
+HTTP/1.1 200 OK
+Content-Type: appliction/json; charset=utf-8
+[
+    {
+        "tenantId": "e53ed5d7-8378-48e1-83bc-63dbbbb49ca5",
+        "tenantName": "MoreAndMore",
+        "tenantState": "blocked"
+    },
+    {
+        "tenantId": "f70e8564-5714-4236-8f25-e78d8ad034e2",
+        "tenantName": "Carl Gross",
+        "tenantState": "unblocked"
+    }
+]
+```
+
+```HTTP
+HTTP/1.1 200 OK
+Content-Type: appliction/json; charset=utf-8
+[
+    {
+        "tenantId": "e53ed5d7-8378-48e1-83bc-63dbbbb49ca5",
+        "tenantName": "MoreAndMore",
+        "tenantState": "blocked"
+    }
+]
+```
+
+```HTTP
+HTTP/1.1 200 OK
+Content-Type: appliction/json; charset=utf-8
+[
+    {
+        "tenantId": "f70e8564-5714-4236-8f25-e78d8ad034e2",
+        "tenantName": "Carl Gross",
+        "tenantState": "unblocked"
+    }
+]
+```
+
+##### Error
+
+```HTTP
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json; charset=utf-8
+{
+    "error": [
+        "<Error message>"
+    ]
+}
+```
