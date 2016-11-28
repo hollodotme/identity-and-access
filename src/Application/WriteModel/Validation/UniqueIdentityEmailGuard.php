@@ -44,7 +44,7 @@ final class UniqueIdentityEmailGuard extends AbstractPullView
 
 			if ( $event instanceof IdentityWasRegistered )
 			{
-				$registeredTenants[ $event->getIdentityEmail()->toString() ] = $event->getIdidentityId();
+				$registeredTenants[ $event->getIdentityEmail()->toString() ] = $event->getIdentityId();
 			}
 		}
 

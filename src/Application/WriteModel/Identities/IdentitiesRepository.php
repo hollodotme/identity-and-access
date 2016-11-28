@@ -8,6 +8,7 @@ namespace hollodotme\IdentityAndAccess\Application\WriteModel\Identities;
 use hollodotme\EventStore\Types\StreamId;
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\EventStore\Types\StreamSequence;
+use hollodotme\IdentityAndAccess\Application\Constants\Stream;
 use hollodotme\IdentityAndAccess\Application\WriteModel\AbstractRepository;
 use IceHawk\PubSub\Types\Channel;
 
@@ -17,17 +18,15 @@ use IceHawk\PubSub\Types\Channel;
  */
 final class IdentitiesRepository extends AbstractRepository
 {
-	const STREAM_NAME = 'Identity';
-
-	protected function getChannel() : Channel
+	protected function getChannel(): Channel
 	{
-		return new Channel( self::STREAM_NAME );
+		return new Channel( Stream::IDENTITY );
 	}
 
-	public function findIdentityWithId( IdentityId $identityId ) : Identity
+	public function findIdentityWithId( IdentityId $identityId ): Identity
 	{
 		$eventStream = $this->getEventStore()->retrieveEntityStream(
-			new StreamName( self::STREAM_NAME ),
+			new StreamName( Stream::IDENTITY ),
 			new StreamId( $identityId->toString() ),
 			new StreamSequence( 0 )
 		);

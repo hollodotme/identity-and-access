@@ -10,10 +10,10 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWas
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasUnblocked;
 
 /**
- * Class TenantsEventMap
+ * Class TenantEventMap
  * @package hollodotme\IdentityAndAccess\Application\Services\EventMaps
  */
-final class TenantsEventMap extends AbstractEventMap
+final class TenantEventMap extends AbstractEventMap
 {
 	const MAP = [
 		'TenantWasRegistered' => TenantWasRegistered::class,

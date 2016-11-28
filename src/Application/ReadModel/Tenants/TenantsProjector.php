@@ -6,6 +6,7 @@
 namespace hollodotme\IdentityAndAccess\Application\ReadModel\Tenants;
 
 use hollodotme\IdentityAndAccess\Application\AbstractPushView;
+use hollodotme\IdentityAndAccess\Application\ReadModel\Traits\ArrayToJsonConverting;
 use hollodotme\IdentityAndAccess\Application\WriteModel\EventEnvelope;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasRegistered;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasUnblocked;
@@ -17,6 +18,8 @@ use hollodotme\IdentityAndAccess\Infrastructure\Adapters\Redis\RedisManager;
  */
 final class TenantsProjector extends AbstractPushView
 {
+	use ArrayToJsonConverting;
+
 	/** @var RedisManager */
 	private $redisManager;
 
@@ -40,11 +43,6 @@ final class TenantsProjector extends AbstractPushView
 				]
 			)
 		);
-	}
-
-	private function getJsonString( array $data ) : string
-	{
-		return json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
 	}
 
 	protected function whenTenantWasBlocked( EventEnvelope $envelope )

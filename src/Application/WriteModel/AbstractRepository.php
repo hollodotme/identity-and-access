@@ -28,7 +28,7 @@ abstract class AbstractRepository
 		$this->messageBus = $messageBus;
 	}
 
-	final protected function getEventStore() : StoresEventStream
+	final protected function getEventStore(): StoresEventStream
 	{
 		return $this->eventStore;
 	}
@@ -46,6 +46,7 @@ abstract class AbstractRepository
 
 		$this->eventStore->persistEventStream( $persistEventStream );
 
+		/** @var EventEnvelope $eventEnvelope */
 		foreach ( $eventEnvelopes as $eventEnvelope )
 		{
 			$this->messageBus->publish( $this->getChannel(), $eventEnvelope );
@@ -54,5 +55,5 @@ abstract class AbstractRepository
 		$aggregateRoot->clearChanges();
 	}
 
-	abstract protected function getChannel() : Channel;
+	abstract protected function getChannel(): Channel;
 }

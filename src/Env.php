@@ -7,6 +7,7 @@ namespace hollodotme\IdentityAndAccess;
 
 use hollodotme\EventStore\EventStore;
 use hollodotme\IdentityAndAccess\Application\Constants\Stream;
+use hollodotme\IdentityAndAccess\Application\ReadModel\Identities\IdentitiesProjector;
 use hollodotme\IdentityAndAccess\Application\ReadModel\Tenants\TenantsProjector;
 use hollodotme\IdentityAndAccess\Application\Services\EventEnvelopeBuilder;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\BlockTenantCommandHandler;
@@ -33,7 +34,7 @@ use IceHawk\PubSub\Types\Channel;
  */
 final class Env extends AbstractObjectPool
 {
-	public function getEventStore() : EventStore
+	public function getEventStore(): EventStore
 	{
 		return $this->getSharedObject(
 			'eventStore',
@@ -56,7 +57,7 @@ final class Env extends AbstractObjectPool
 		);
 	}
 
-	public function getCommandBus() : CommandBus
+	public function getCommandBus(): CommandBus
 	{
 		return $this->getSharedObject(
 			'commandBus',
@@ -77,7 +78,7 @@ final class Env extends AbstractObjectPool
 		);
 	}
 
-	public function getMessageBus() : MessageBus
+	public function getMessageBus(): MessageBus
 	{
 		return $this->getSharedObject(
 			'messageBus',
@@ -90,12 +91,17 @@ final class Env extends AbstractObjectPool
 					new TenantsProjector( $this->getRedisManager() )
 				);
 
+				$messageBus->subscribe(
+					new Channel( Stream::IDENTITY ),
+					new IdentitiesProjector( $this->getRedisManager() )
+				);
+
 				return $messageBus;
 			}
 		);
 	}
 
-	public function getRedisManager() : RedisManager
+	public function getRedisManager(): RedisManager
 	{
 		return $this->getSharedObject(
 			'redisManager',

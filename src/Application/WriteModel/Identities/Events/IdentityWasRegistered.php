@@ -19,7 +19,7 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityPassw
 final class IdentityWasRegistered extends AbstractDomainEvent
 {
 	/** @var IdentityId */
-	private $ididentityId;
+	private $identityId;
 
 	/** @var IdentityEmail */
 	private $identityEmail;
@@ -37,15 +37,15 @@ final class IdentityWasRegistered extends AbstractDomainEvent
 		IdentityName $name
 	)
 	{
-		$this->ididentityId         = $id;
+		$this->identityId           = $id;
 		$this->identityEmail        = $email;
 		$this->identityPasswordHash = $passwordHash;
 		$this->identityName         = $name;
 	}
 
-	public function getIdidentityId(): IdentityId
+	public function getIdentityId(): IdentityId
 	{
-		return $this->ididentityId;
+		return $this->identityId;
 	}
 
 	public function getIdentityEmail(): IdentityEmail
@@ -63,15 +63,15 @@ final class IdentityWasRegistered extends AbstractDomainEvent
 		return $this->identityName;
 	}
 
-	public function getStreamId() : StreamId
+	public function getStreamId(): StreamId
 	{
-		return new StreamId( $this->ididentityId->toString() );
+		return new StreamId( $this->identityId->toString() );
 	}
 
-	protected function toPayload() : array
+	protected function toPayload(): array
 	{
 		return [
-			'identityId'           => $this->ididentityId->toString(),
+			'identityId'           => $this->identityId->toString(),
 			'identityEmail'        => $this->identityEmail->toString(),
 			'identityPasswordHash' => $this->identityPasswordHash->toString(),
 			'identityName'         => $this->identityName->toString(),
@@ -80,7 +80,7 @@ final class IdentityWasRegistered extends AbstractDomainEvent
 
 	protected function fromPayload( array $payload )
 	{
-		$this->ididentityId         = new IdentityId( $payload['identityId'] );
+		$this->identityId           = new IdentityId( $payload['identityId'] );
 		$this->identityEmail        = new IdentityId( $payload['identityEmail'] );
 		$this->identityPasswordHash = new IdentityId( $payload['identityPasswordHash'] );
 		$this->identityName         = new IdentityId( $payload['identityName'] );

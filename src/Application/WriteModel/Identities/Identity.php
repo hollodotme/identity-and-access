@@ -50,7 +50,7 @@ final class Identity extends AbstractAggregateRoot
 
 	protected function whenIdentityWasRegistered( IdentityWasRegistered $event )
 	{
-		$this->id           = $event->getIdidentityId();
+		$this->id           = $event->getIdentityId();
 		$this->email        = $event->getIdentityEmail();
 		$this->passwordHash = $event->getIdentityPasswordHash();
 		$this->name         = $event->getIdentityName();

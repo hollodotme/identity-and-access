@@ -29,6 +29,8 @@ final class EventMapper extends AbstractEventMapper
 	{
 		$key = $streamName->toString();
 
+		echo $key;
+
 		if ( !isset($this->maps[ $key ]) )
 		{
 			$this->maps[ $key ] = $this->loadMap( $streamName );
@@ -39,7 +41,7 @@ final class EventMapper extends AbstractEventMapper
 
 	private function loadMap( StreamName $streamName ) : MapsEventClassName
 	{
-		$className = __NAMESPACE__ . '\\EventMaps\\' . $streamName->toString() . 'sEventMap';
+		$className = __NAMESPACE__ . '\\EventMaps\\' . $streamName->toString() . 'EventMap';
 
 		try
 		{
