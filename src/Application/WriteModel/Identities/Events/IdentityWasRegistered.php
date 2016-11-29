@@ -11,6 +11,7 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityEmail
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityId;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityName;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityPasswordHash;
+use hollodotme\IdentityAndAccess\StandardTypes\UUID;
 
 /**
  * Class IdentityWasRegistered
@@ -80,9 +81,9 @@ final class IdentityWasRegistered extends AbstractDomainEvent
 
 	protected function fromPayload( array $payload )
 	{
-		$this->identityId           = new IdentityId( $payload['identityId'] );
-		$this->identityEmail        = new IdentityId( $payload['identityEmail'] );
-		$this->identityPasswordHash = new IdentityId( $payload['identityPasswordHash'] );
-		$this->identityName         = new IdentityId( $payload['identityName'] );
+		$this->identityId           = new IdentityId( new UUID( $payload['identityId'] ) );
+		$this->identityEmail        = new IdentityEmail( $payload['identityEmail'] );
+		$this->identityPasswordHash = new IdentityPasswordHash( $payload['identityPasswordHash'] );
+		$this->identityName         = new IdentityName( $payload['identityName'] );
 	}
 }

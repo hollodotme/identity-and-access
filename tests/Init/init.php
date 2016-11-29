@@ -38,6 +38,10 @@ $mysqlManager    = new MySqlManager( $mysqlConnection );
 
 $mysqlManager->query( 'TRUNCATE TABLE EventStore' );
 
+# Start time
+
+$startTime = microtime( true );
+
 # Action
 
 $idaApiClient = new IdaApiClient();
@@ -64,6 +68,8 @@ $results['Tenants'] = $idaApiClient->listTenants();
 
 $identitiesToRegister = [
 	[ 'email' => 'hw@hollo.me', 'password' => 'test123', 'name' => 'Holger Woltersdorf' ],
+	[ 'email' => 'max@mustermann.org', 'password' => '123test', 'name' => 'Max Mustermann' ],
+	[ 'email' => 'jane@doe.com', 'password' => '456test', 'name' => 'Jane Doe' ],
 ];
 
 foreach ( $identitiesToRegister as $item )
@@ -81,3 +87,6 @@ foreach ( $results as $key => $result )
 {
 	printf( "%-30s: %s\n", $key, print_r( $result, true ) );
 }
+
+echo "Memory consumption: " . (memory_get_peak_usage( true ) / 1024 / 1024) . " MiB\n";
+echo "Time elapsed: " . (microtime( true ) - $startTime) . ' Seconds';
