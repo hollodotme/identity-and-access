@@ -9,7 +9,10 @@ use hollodotme\EventStore\AbstractEventMapper;
 use hollodotme\EventStore\Types\EventId;
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\IdentityAndAccess\Application\Exceptions\LoadingEventMapFailed;
-use hollodotme\IdentityAndAccess\Application\Services\Interfaces\MapsEventClassName;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasRegistered;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasBlocked;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasRegistered;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWasUnblocked;
 
 /**
  * Class EventMapper
@@ -17,49 +20,22 @@ use hollodotme\IdentityAndAccess\Application\Services\Interfaces\MapsEventClassN
  */
 final class EventMapper extends AbstractEventMapper
 {
-	/** @var array */
-	private $maps;
+	const MAP = [
+		'TenantWasRegistered'   => TenantWasRegistered::class,
+		'TenantWasBlocked'      => TenantWasBlocked::class,
+		'TenantWasUnblocked'    => TenantWasUnblocked::class,
+		'IdentityWasRegistered' => IdentityWasRegistered::class,
+	];
 
-	public function __construct()
+	protected function getEventClass( StreamName $streamName, EventId $eventId ): string
 	{
-		$this->maps = [];
-	}
+		$key = $eventId->toString();
 
-	protected function getEventClass( StreamName $streamName, EventId $eventId ) : string
-	{
-		$key = $streamName->toString();
-
-		echo $key;
-
-		if ( !isset($this->maps[ $key ]) )
+		if ( !array_key_exists( $key, self::MAP ) )
 		{
-			$this->maps[ $key ] = $this->loadMap( $streamName );
+			throw (new LoadingEventMapFailed())->withStreamNameAndEventId( $streamName, $eventId );
 		}
 
-		return $this->maps[ $key ]->lookUpClassName( $eventId );
-	}
-
-	private function loadMap( StreamName $streamName ) : MapsEventClassName
-	{
-		$className = __NAMESPACE__ . '\\EventMaps\\' . $streamName->toString() . 'EventMap';
-
-		try
-		{
-			$refClass = new \ReflectionClass( $className );
-		}
-		catch ( \ReflectionException $e )
-		{
-			throw (new LoadingEventMapFailed())->withStreamName( $streamName );
-		}
-
-		if ( !$refClass->implementsInterface( MapsEventClassName::class ) )
-		{
-			throw (new LoadingEventMapFailed())->withStreamName( $streamName );
-		}
-
-		/** @var MapsEventClassName $eventMap */
-		$eventMap = $refClass->newInstance();
-
-		return $eventMap;
+		return self::MAP[ $key ];
 	}
 }

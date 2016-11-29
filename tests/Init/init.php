@@ -43,7 +43,7 @@ $mysqlManager->query( 'TRUNCATE TABLE EventStore' );
 $idaApiClient = new IdaApiClient();
 $results      = [];
 
-$tenantsToRegister = ['More & More', 'Carl Gross', 'Strauss Innovation'];
+$tenantsToRegister = [ 'More & More', 'Carl Gross', 'Strauss Innovation' ];
 
 foreach ( $tenantsToRegister as $tenantName )
 {
@@ -52,7 +52,7 @@ foreach ( $tenantsToRegister as $tenantName )
 
 $tenants = $idaApiClient->listTenants();
 
-$tenantsToBlock = [1];
+$tenantsToBlock = [ 1 ];
 
 foreach ( $tenantsToBlock as $index )
 {
@@ -63,7 +63,7 @@ foreach ( $tenantsToBlock as $index )
 $results['Tenants'] = $idaApiClient->listTenants();
 
 $identitiesToRegister = [
-	['email' => 'hw@hollo.me', 'password' => 'test123', 'name' => 'Holger Woltersdorf'],
+	[ 'email' => 'hw@hollo.me', 'password' => 'test123', 'name' => 'Holger Woltersdorf' ],
 ];
 
 foreach ( $identitiesToRegister as $item )
@@ -72,6 +72,8 @@ foreach ( $identitiesToRegister as $item )
 		$item['email'], $item['password'], $item['name']
 	);
 }
+
+$results['Identities'] = $idaApiClient->listIdentities();
 
 # Output
 

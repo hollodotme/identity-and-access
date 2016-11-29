@@ -5,6 +5,7 @@
 
 namespace hollodotme\IdentityAndAccess\Application\IceHawk;
 
+use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Identities\ListIdentitiesRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Tenants\ListTenantsRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Identities\RegisterIdentityRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants\BlockTenantRequestHandler;
@@ -51,6 +52,10 @@ final class IceHawkConfig implements ConfiguresIceHawk
 					new ReadRoute(
 						new RegExp( '#/tenant/list/?#' ),
 						new ListTenantsRequestHandler( $this->env )
+					),
+					new ReadRoute(
+						new RegExp( '#/identity/list/?#' ),
+						new ListIdentitiesRequestHandler( $this->env )
 					),
 				]
 			),

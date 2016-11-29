@@ -14,7 +14,7 @@ use hollodotme\IdentityAndAccess\Application\ReadModel\Tenants\Tenant;
 final class ListTenantsResult extends AbstractResult
 {
 	/** @var array|Tenant[] */
-	private $tenants;
+	private $tenants = [];
 
 	public function getTenants() : array
 	{

@@ -5,6 +5,7 @@
 
 namespace hollodotme\IdentityAndAccess\Application\Exceptions;
 
+use hollodotme\EventStore\Types\EventId;
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\IdentityAndAccess\Exceptions\IdentityAndAccessException;
 
@@ -17,14 +18,23 @@ final class LoadingEventMapFailed extends IdentityAndAccessException
 	/** @var StreamName */
 	private $streamName;
 
-	public function getStreamName() : StreamName
+	/** @var string */
+	private $eventId;
+
+	public function getStreamName(): StreamName
 	{
 		return $this->streamName;
 	}
 
-	public function withStreamName( StreamName $streamName ) : self
+	public function getEventId(): string
+	{
+		return $this->eventId;
+	}
+
+	public function withStreamNameAndEventId( StreamName $streamName, EventId $eventId ): self
 	{
 		$this->streamName = $streamName;
+		$this->eventId = $eventId;
 
 		return $this;
 	}

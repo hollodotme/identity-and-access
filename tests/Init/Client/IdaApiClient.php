@@ -23,7 +23,7 @@ class IdaApiClient
 {
 	const BASE_URL = 'http://localhost/api/v1';
 
-	public function registerTenant( string $tenantName ) : string
+	public function registerTenant( string $tenantName ): string
 	{
 		return $this->executePostRequest(
 			$this->getUrl( '/tenant' ),
@@ -33,12 +33,12 @@ class IdaApiClient
 		);
 	}
 
-	private function getUrl( string $path ) : string
+	private function getUrl( string $path ): string
 	{
 		return self::BASE_URL . $path;
 	}
 
-	public function blockTenant( string $tenantId ) : string
+	public function blockTenant( string $tenantId ): string
 	{
 		return $this->executePostRequest(
 			$this->getUrl( '/tenant/block' ),
@@ -48,7 +48,7 @@ class IdaApiClient
 		);
 	}
 
-	public function unblockTenant( string $tenantId ) : string
+	public function unblockTenant( string $tenantId ): string
 	{
 		return $this->executePostRequest(
 			$this->getUrl( '/tenant/unblock' ),
@@ -58,12 +58,12 @@ class IdaApiClient
 		);
 	}
 
-	public function listTenants() : array
+	public function listTenants(): array
 	{
 		return $this->executeGetRequest( $this->getUrl( '/tenant/list' ), [] );
 	}
 
-	public function registerIdentity( string $email, string $passphrase, string $name ) : string
+	public function registerIdentity( string $email, string $passphrase, string $name ): string
 	{
 		return $this->executePostRequest(
 			$this->getUrl( '/identity' ),
@@ -75,9 +75,14 @@ class IdaApiClient
 		);
 	}
 
-	private function executePostRequest( string $url, array $params ) : string
+	public function listIdentities(): array
 	{
-		$headers = ["Cache-Control: no-cache"];
+		return $this->executeGetRequest( $this->getUrl( '/identity/list' ), [] );
+	}
+
+	private function executePostRequest( string $url, array $params ): string
+	{
+		$headers = [ "Cache-Control: no-cache" ];
 
 		$ch = curl_init();
 
@@ -109,9 +114,9 @@ class IdaApiClient
 		}
 	}
 
-	private function executeGetRequest( string $url, array $params ) : array
+	private function executeGetRequest( string $url, array $params ): array
 	{
-		$headers = ["Cache-Control: no-cache"];
+		$headers = [ "Cache-Control: no-cache" ];
 
 		$ch = curl_init();
 
