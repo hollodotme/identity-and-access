@@ -75,6 +75,26 @@ class IdaApiClient
 		);
 	}
 
+	public function blockIdentity( string $identityId ): string
+	{
+		return $this->executePostRequest(
+			$this->getUrl( '/identity/block' ),
+			[
+				'identityId' => $identityId,
+			]
+		);
+	}
+
+	public function unblockIdentity( string $identityId ): string
+	{
+		return $this->executePostRequest(
+			$this->getUrl( '/identity/unblock' ),
+			[
+				'identityId' => $identityId,
+			]
+		);
+	}
+
 	public function listIdentities(): array
 	{
 		return $this->executeGetRequest( $this->getUrl( '/identity/list' ), [] );

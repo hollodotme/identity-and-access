@@ -18,7 +18,7 @@ final class EventStream
 
 	public function __construct( \Generator $eventEnvelopes = null )
 	{
-		$this->eventEnvelopes = $eventEnvelopes;
+		$this->eventEnvelopes = $eventEnvelopes ? : $this->emptyEmptyEnvelopes();
 	}
 
 	public function addEventEnvelope( EnclosesEvent $eventEnvelope )
@@ -33,12 +33,17 @@ final class EventStream
 		}
 	}
 
-	private function newEnvelopes( EnclosesEvent $enclosesEvent ) : \Generator
+	private function emptyEmptyEnvelopes(): \Generator
+	{
+		yield from [];
+	}
+
+	private function newEnvelopes( EnclosesEvent $enclosesEvent ): \Generator
 	{
 		yield $enclosesEvent;
 	}
 
-	private function mergeEnvelopes( \Generator $eventEnvelopes, EnclosesEvent $eventEnvelope ) : \Generator
+	private function mergeEnvelopes( \Generator $eventEnvelopes, EnclosesEvent $eventEnvelope ): \Generator
 	{
 		yield from $eventEnvelopes;
 
@@ -48,7 +53,7 @@ final class EventStream
 	/**
 	 * @return \Generator|EnclosesEvent[]
 	 */
-	public function getEventEnvelopes() : \Generator
+	public function getEventEnvelopes(): \Generator
 	{
 		yield from $this->eventEnvelopes;
 	}

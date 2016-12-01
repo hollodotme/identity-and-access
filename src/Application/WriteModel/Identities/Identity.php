@@ -6,7 +6,9 @@
 namespace hollodotme\IdentityAndAccess\Application\WriteModel\Identities;
 
 use hollodotme\IdentityAndAccess\Application\WriteModel\AbstractAggregateRoot;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasBlocked;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasRegistered;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasUnblocked;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\RoleWasAssigned;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\States\Interfaces\RepresentsIdentityState;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\States\UnblockedState;
@@ -69,6 +71,26 @@ final class Identity extends AbstractAggregateRoot
 	private function setState( RepresentsIdentityState $identityState )
 	{
 		$this->state = $identityState;
+	}
+
+	public function block()
+	{
+		$this->trackThat( new IdentityWasBlocked( $this->id, $this->state->block() ) );
+	}
+
+	protected function whenIdentityWasBlocked( IdentityWasBlocked $event )
+	{
+		$this->setState( $event->getIdentityState() );
+	}
+
+	public function unblock()
+	{
+		$this->trackThat( new IdentityWasBlocked( $this->id, $this->state->unblock() ) );
+	}
+
+	protected function whenIdentityWasUnblocked( IdentityWasUnblocked $event )
+	{
+		$this->setState( $event->getIdentityState() );
 	}
 
 	public function assignRole( Role $role )

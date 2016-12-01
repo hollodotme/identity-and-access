@@ -10,13 +10,17 @@ use hollodotme\IdentityAndAccess\Application\Constants\Stream;
 use hollodotme\IdentityAndAccess\Application\ReadModel\Identities\IdentitiesProjector;
 use hollodotme\IdentityAndAccess\Application\ReadModel\Tenants\TenantsProjector;
 use hollodotme\IdentityAndAccess\Application\Services\EventEnvelopeBuilder;
+use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\BlockIdentityCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\BlockTenantCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\RegisterIdentityCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\RegisterTenantCommandHandler;
+use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\UnblockIdentityCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\UnblockTenantCommandHandler;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\BlockIdentityCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\BlockTenantCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\RegisterIdentityCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\RegisterTenantCommand;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\UnblockIdentityCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\UnblockTenantCommand;
 use hollodotme\IdentityAndAccess\Infrastructure\Adapters\MySql\MySqlAdapter;
 use hollodotme\IdentityAndAccess\Infrastructure\Adapters\MySql\MySqlConnection;
@@ -70,6 +74,8 @@ final class Env extends AbstractObjectPool
 						BlockTenantCommand::class      => BlockTenantCommandHandler::class,
 						UnblockTenantCommand::class    => UnblockTenantCommandHandler::class,
 						RegisterIdentityCommand::class => RegisterIdentityCommandHandler::class,
+						BlockIdentityCommand::class    => BlockIdentityCommandHandler::class,
+						UnblockIdentityCommand::class  => UnblockIdentityCommandHandler::class,
 					]
 				);
 

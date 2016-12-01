@@ -16,7 +16,9 @@ namespace hollodotme\IdentityAndAccess\Application\ReadModel\Identities;
 use hollodotme\IdentityAndAccess\Application\AbstractPushView;
 use hollodotme\IdentityAndAccess\Application\ReadModel\Traits\ArrayToJsonConverting;
 use hollodotme\IdentityAndAccess\Application\WriteModel\EventEnvelope;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasBlocked;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasRegistered;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasUnblocked;
 use hollodotme\IdentityAndAccess\Infrastructure\Adapters\Redis\RedisManager;
 
 /**
@@ -51,6 +53,38 @@ final class IdentitiesProjector extends AbstractPushView
 					'state'        => $event->getIdentityState(),
 				]
 			)
+		);
+	}
+
+	protected function whenIdentityWasBlocked( EventEnvelope $envelope )
+	{
+		/** @var IdentityWasBlocked $event */
+		$event = $envelope->getEvent();
+
+		$identityJson      = $this->redisManager->hGet( 'identities', $event->getIdentityId()->toString() );
+		$identity          = json_decode( $identityJson, true );
+		$identity['state'] = $event->getIdentityState()->toString();
+
+		$this->redisManager->hSet(
+			'identities',
+			$event->getIdentityId()->toString(),
+			$this->getJsonString( $identity )
+		);
+	}
+
+	protected function whenIdentityWasUnblocked( EventEnvelope $envelope )
+	{
+		/** @var IdentityWasUnblocked $event */
+		$event = $envelope->getEvent();
+
+		$identityJson      = $this->redisManager->hGet( 'identities', $event->getIdentityId()->toString() );
+		$identity          = json_decode( $identityJson, true );
+		$identity['state'] = $event->getIdentityState()->toString();
+
+		$this->redisManager->hSet(
+			'identities',
+			$event->getIdentityId()->toString(),
+			$this->getJsonString( $identity )
 		);
 	}
 }

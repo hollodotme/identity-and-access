@@ -10,7 +10,6 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\AbstractDomainEvent;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\States\AbstractTenantState;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\States\Interfaces\RepresentsTenantState;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\TenantId;
-use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\TenantName;
 use hollodotme\IdentityAndAccess\StandardTypes\UUID;
 
 /**
@@ -22,16 +21,12 @@ final class TenantWasUnblocked extends AbstractDomainEvent
 	/** @var TenantId */
 	private $tenantId;
 
-	/** @var TenantName */
-	private $tenantName;
-
 	/** @var RepresentsTenantState */
 	private $tenantState;
 
-	public function __construct( TenantId $tenantId, TenantName $tenantName, RepresentsTenantState $tenantState )
+	public function __construct( TenantId $tenantId, RepresentsTenantState $tenantState )
 	{
 		$this->tenantId    = $tenantId;
-		$this->tenantName  = $tenantName;
 		$this->tenantState = $tenantState;
 	}
 
@@ -40,26 +35,20 @@ final class TenantWasUnblocked extends AbstractDomainEvent
 		return $this->tenantId;
 	}
 
-	public function getTenantName(): TenantName
-	{
-		return $this->tenantName;
-	}
-
 	public function getTenantState(): RepresentsTenantState
 	{
 		return $this->tenantState;
 	}
 
-	public function getStreamId() : StreamId
+	public function getStreamId(): StreamId
 	{
 		return new StreamId( $this->tenantId->toString() );
 	}
 
-	protected function toPayload() : array
+	protected function toPayload(): array
 	{
 		return [
 			'tenantId'    => $this->tenantId->toString(),
-			'tenantName'  => $this->tenantName->toString(),
 			'tenantState' => $this->tenantState->toString(),
 		];
 	}
@@ -67,7 +56,6 @@ final class TenantWasUnblocked extends AbstractDomainEvent
 	protected function fromPayload( array $payload )
 	{
 		$this->tenantId    = new TenantId( new UUID( $payload['tenantId'] ) );
-		$this->tenantName  = new TenantName( $payload['tenantName'] );
 		$this->tenantState = AbstractTenantState::fromString( $payload['tenantState'] );
 	}
 }

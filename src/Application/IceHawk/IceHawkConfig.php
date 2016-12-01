@@ -7,7 +7,9 @@ namespace hollodotme\IdentityAndAccess\Application\IceHawk;
 
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Identities\ListIdentitiesRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Tenants\ListTenantsRequestHandler;
+use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Identities\BlockIdentityRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Identities\RegisterIdentityRequestHandler;
+use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Identities\UnblockIdentityRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants\BlockTenantRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants\RegisterTenantRequestHandler;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Tenants\UnblockTenantRequestHandler;
@@ -84,6 +86,14 @@ final class IceHawkConfig implements ConfiguresIceHawk
 					new WriteRoute(
 						new RegExp( '#/identity/?$#' ),
 						new RegisterIdentityRequestHandler( $this->env )
+					),
+					new WriteRoute(
+						new RegExp( '#/identity/block/?$#' ),
+						new BlockIdentityRequestHandler( $this->env )
+					),
+					new WriteRoute(
+						new RegExp( '#/identity/unblock/?$#' ),
+						new UnblockIdentityRequestHandler( $this->env )
 					),
 				]
 			),

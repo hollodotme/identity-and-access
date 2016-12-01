@@ -79,6 +79,16 @@ foreach ( $identitiesToRegister as $item )
 	);
 }
 
+$identities = $idaApiClient->listIdentities();
+
+$identitiesToBlock = [ 1, 2 ];
+
+foreach ( $identitiesToBlock as $index )
+{
+	$identity                                        = $identities[ $index ];
+	$results[ 'Block ' . $identity['identityName'] ] = $idaApiClient->blockIdentity( $identity['identityId'] );
+}
+
 $results['Identities'] = $idaApiClient->listIdentities();
 
 # Output
