@@ -5,7 +5,7 @@
 
 namespace hollodotme\IdentityAndAccess\Application\ReadModel\Queries;
 
-use hollodotme\IdentityAndAccess\Application\ReadModel\Interfaces\FiltersIdentity;
+use hollodotme\IdentityAndAccess\Application\ReadModel\Interfaces\FiltersIdentities;
 
 /**
  * Class ListIdentitiesQuery
@@ -13,7 +13,7 @@ use hollodotme\IdentityAndAccess\Application\ReadModel\Interfaces\FiltersIdentit
  */
 final class ListIdentitiesQuery
 {
-	/** @var array|FiltersIdentity[] */
+	/** @var array|FiltersIdentities[] */
 	private $filters;
 
 	public function __construct()
@@ -21,7 +21,7 @@ final class ListIdentitiesQuery
 		$this->filters = [];
 	}
 
-	public function addFilter( FiltersIdentity $filter )
+	public function addFilter( FiltersIdentities $filter )
 	{
 		$this->filters[] = $filter;
 	}

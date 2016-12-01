@@ -27,7 +27,8 @@ final class ListIdentitiesQueryHandler extends AbstractQueryHandler
 			$identityList[] = new Identity(
 				$identityId,
 				$identityInfo['email'],
-				$identityInfo['name']
+				$identityInfo['name'],
+				$identityInfo['state']
 			);
 		}
 

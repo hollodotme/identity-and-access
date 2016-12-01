@@ -11,6 +11,8 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityEmail
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityId;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityName;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityPasswordHash;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\States\AbstractIdentityState;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\States\Interfaces\RepresentsIdentityState;
 use hollodotme\IdentityAndAccess\StandardTypes\UUID;
 
 /**
@@ -31,17 +33,22 @@ final class IdentityWasRegistered extends AbstractDomainEvent
 	/** @var IdentityName */
 	private $identityName;
 
+	/** @var RepresentsIdentityState */
+	private $identityState;
+
 	public function __construct(
 		IdentityId $id,
 		IdentityEmail $email,
 		IdentityPasswordHash $passwordHash,
-		IdentityName $name
+		IdentityName $name,
+		RepresentsIdentityState $state
 	)
 	{
 		$this->identityId           = $id;
 		$this->identityEmail        = $email;
 		$this->identityPasswordHash = $passwordHash;
 		$this->identityName         = $name;
+		$this->identityState = $state;
 	}
 
 	public function getIdentityId(): IdentityId
@@ -64,6 +71,11 @@ final class IdentityWasRegistered extends AbstractDomainEvent
 		return $this->identityName;
 	}
 
+	public function getIdentityState(): RepresentsIdentityState
+	{
+		return $this->identityState;
+	}
+
 	public function getStreamId(): StreamId
 	{
 		return new StreamId( $this->identityId->toString() );
@@ -76,6 +88,7 @@ final class IdentityWasRegistered extends AbstractDomainEvent
 			'identityEmail'        => $this->identityEmail->toString(),
 			'identityPasswordHash' => $this->identityPasswordHash->toString(),
 			'identityName'         => $this->identityName->toString(),
+			'identityState'        => $this->identityState->toString(),
 		];
 	}
 
@@ -85,5 +98,6 @@ final class IdentityWasRegistered extends AbstractDomainEvent
 		$this->identityEmail        = new IdentityEmail( $payload['identityEmail'] );
 		$this->identityPasswordHash = new IdentityPasswordHash( $payload['identityPasswordHash'] );
 		$this->identityName         = new IdentityName( $payload['identityName'] );
+		$this->identityState = AbstractIdentityState::fromString( $payload['identityState'] );
 	}
 }

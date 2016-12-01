@@ -48,6 +48,7 @@ final class IdentitiesProjector extends AbstractPushView
 					'email'        => $event->getIdentityEmail(),
 					'name'         => $event->getIdentityName(),
 					'passwordHash' => $event->getIdentityPasswordHash(),
+					'state'        => $event->getIdentityState(),
 				]
 			)
 		);

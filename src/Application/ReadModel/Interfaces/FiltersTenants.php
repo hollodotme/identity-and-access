@@ -5,13 +5,13 @@
 
 namespace hollodotme\IdentityAndAccess\Application\ReadModel\Interfaces;
 
-use hollodotme\IdentityAndAccess\Application\ReadModel\Identities\Identity;
+use hollodotme\IdentityAndAccess\Application\ReadModel\Tenants\Tenant;
 
 /**
- * Interface FiltersIdentity
+ * Interface FiltersTenants
  * @package hollodotme\IdentityAndAccess\Application\ReadModel\Interfaces
  */
-interface FiltersIdentity
+interface FiltersTenants
 {
-	public function isValid( Identity $identity ): bool;
+	public function isValid( Tenant $tenant ): bool;
 }

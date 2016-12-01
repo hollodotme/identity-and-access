@@ -9,13 +9,21 @@ use hollodotme\IdentityAndAccess\Application\ReadModel\Identities\Identity;
 use hollodotme\IdentityAndAccess\Application\ReadModel\Interfaces\FiltersIdentities;
 
 /**
- * Class EmailPattern
+ * Class StateFilter
  * @package hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Identities\Filters
  */
-final class EmailPattern extends AbstractAsteriskPattern implements FiltersIdentities
+final class StateFilter implements FiltersIdentities
 {
+	/** @var array */
+	private $states;
+
+	public function __construct( array $states )
+	{
+		$this->states = $states;
+	}
+
 	public function isValid( Identity $identity ): bool
 	{
-		return (bool)preg_match( $this->getRegExp(), $identity->getEmail() );
+		return in_array( $identity->getState(), $this->states );
 	}
 }

@@ -5,22 +5,29 @@
 
 namespace hollodotme\IdentityAndAccess\Application\ReadModel\Queries;
 
+use hollodotme\IdentityAndAccess\Application\ReadModel\Interfaces\FiltersTenants;
+
 /**
  * Class ListTenantsQuery
  * @package hollodotme\IdentityAndAccess\Application\ReadModel\Queries
  */
 final class ListTenantsQuery
 {
-	/** @var array */
-	private $tenantStatus;
+	/** @var array|FiltersTenants[] */
+	private $filters;
 
-	public function __construct( array $tenantStatus )
+	public function __construct()
 	{
-		$this->tenantStatus = $tenantStatus;
+		$this->filters = [];
 	}
 
-	public function getTenantStates(): array
+	public function addFilter( FiltersTenants $filter )
 	{
-		return $this->tenantStatus;
+		$this->filters[] = $filter;
+	}
+
+	public function getFilters()
+	{
+		return $this->filters;
 	}
 }

@@ -6,13 +6,13 @@
 namespace hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Identities\Filters;
 
 use hollodotme\IdentityAndAccess\Application\ReadModel\Identities\Identity;
-use hollodotme\IdentityAndAccess\Application\ReadModel\Interfaces\FiltersIdentity;
+use hollodotme\IdentityAndAccess\Application\ReadModel\Interfaces\FiltersIdentities;
 
 /**
  * Class NamePattern
  * @package hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Identities\Filters
  */
-final class NamePattern extends AbstractAsteriskPattern implements FiltersIdentity
+final class NamePattern extends AbstractAsteriskPattern implements FiltersIdentities
 {
 	public function isValid( Identity $identity ): bool
 	{

@@ -8,6 +8,8 @@ namespace hollodotme\IdentityAndAccess\Application\WriteModel\Identities;
 use hollodotme\IdentityAndAccess\Application\WriteModel\AbstractAggregateRoot;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasRegistered;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\RoleWasAssigned;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\States\Interfaces\RepresentsIdentityState;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\States\UnblockedState;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Roles\Exceptions\RoleAlreadyAssigned;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Roles\Role;
 
@@ -29,6 +31,9 @@ final class Identity extends AbstractAggregateRoot
 	/** @var IdentityName */
 	private $name;
 
+	/** @var RepresentsIdentityState */
+	private $state;
+
 	/** @var array|Role[] */
 	private $roles;
 
@@ -40,10 +45,10 @@ final class Identity extends AbstractAggregateRoot
 		IdentityEmail $email,
 		IdentityPasswordHash $passwordHash,
 		IdentityName $name
-	) : self
+	): self
 	{
 		$identity = new self();
-		$identity->trackThat( new IdentityWasRegistered( $id, $email, $passwordHash, $name ) );
+		$identity->trackThat( new IdentityWasRegistered( $id, $email, $passwordHash, $name, new UnblockedState() ) );
 
 		return $identity;
 	}
@@ -54,8 +59,16 @@ final class Identity extends AbstractAggregateRoot
 		$this->email        = $event->getIdentityEmail();
 		$this->passwordHash = $event->getIdentityPasswordHash();
 		$this->name         = $event->getIdentityName();
-		$this->roles        = [];
-		$this->properties   = [];
+
+		$this->setState( $event->getIdentityState() );
+
+		$this->roles      = [];
+		$this->properties = [];
+	}
+
+	private function setState( RepresentsIdentityState $identityState )
+	{
+		$this->state = $identityState;
 	}
 
 	public function assignRole( Role $role )
@@ -70,7 +83,7 @@ final class Identity extends AbstractAggregateRoot
 		}
 	}
 
-	private function hasRole( Role $other ) : bool
+	private function hasRole( Role $other ): bool
 	{
 		foreach ( $this->roles as $role )
 		{

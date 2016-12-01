@@ -15,7 +15,7 @@ use hollodotme\IdentityAndAccess\Application\ReadModel\Tenants\Tenant;
  */
 final class ListTenantsQueryHandler extends AbstractQueryHandler
 {
-	public function handle( ListTenantsQuery $query ) : ListTenantsResult
+	public function handle( ListTenantsQuery $query ): ListTenantsResult
 	{
 		$redisManager = $this->getEnv()->getRedisManager();
 		$tenants      = $redisManager->hGetAll( 'tenants' );
@@ -27,15 +27,9 @@ final class ListTenantsQueryHandler extends AbstractQueryHandler
 			$tenantList[] = new Tenant( $tenantId, $tenantInfo['name'], $tenantInfo['state'] );
 		}
 
-		if ( !empty($query->getTenantStates()) )
+		foreach ( $query->getFilters() as $filter )
 		{
-			$tenantList = array_filter(
-				$tenantList,
-				function ( Tenant $tenant ) use ( $query )
-				{
-					return in_array( $tenant->getState(), $query->getTenantStates() );
-				}
-			);
+			$tenantList = array_filter( $tenantList, [ $filter, 'isValid' ] );
 		}
 
 		$result = new ListTenantsResult();

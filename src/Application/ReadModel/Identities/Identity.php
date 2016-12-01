@@ -20,11 +20,15 @@ final class Identity implements \JsonSerializable
 	/** @var string */
 	private $name;
 
-	public function __construct( string $id, string $email, string $name )
+	/** @var string */
+	private $state;
+
+	public function __construct( string $id, string $email, string $name, string $state )
 	{
 		$this->id    = $id;
 		$this->email = $email;
 		$this->name  = $name;
+		$this->state = $state;
 	}
 
 	public function getId(): string
@@ -42,12 +46,18 @@ final class Identity implements \JsonSerializable
 		return $this->name;
 	}
 
+	public function getState(): string
+	{
+		return $this->state;
+	}
+
 	public function jsonSerialize()
 	{
 		return [
 			'identityId'    => $this->id,
 			'identityName'  => $this->name,
 			'identityEmail' => $this->email,
+			'identityState' => $this->state,
 		];
 	}
 }

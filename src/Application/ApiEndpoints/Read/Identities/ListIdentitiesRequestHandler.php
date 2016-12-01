@@ -7,6 +7,7 @@ namespace hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Identities;
 
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Identities\Filters\EmailPattern;
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Identities\Filters\NamePattern;
+use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Read\Identities\Filters\StateFilter;
 use hollodotme\IdentityAndAccess\Application\ReadModel\Queries\ListIdentitiesQuery;
 use hollodotme\IdentityAndAccess\Application\ReadModel\QueryHandlers\ListIdentitiesQueryHandler;
 use hollodotme\IdentityAndAccess\Application\Responses\Json;
@@ -54,6 +55,11 @@ final class ListIdentitiesRequestHandler extends AbstractReadRequestHandler impl
 		if ( !empty( $input->get( 'email' ) ) )
 		{
 			$query->addFilter( new EmailPattern( $input->get( 'email' ) ) );
+		}
+
+		if ( !empty( $input->get( 'states' ) ) )
+		{
+			$query->addFilter( new StateFilter( (array)$input->get( 'state' ) ) );
 		}
 	}
 }
