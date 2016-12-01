@@ -50,15 +50,14 @@ final class TenantsProjector extends AbstractPushView
 		/** @var TenantWasRegistered $event */
 		$event = $envelope->getEvent();
 
+		$tenantJson      = $this->redisManager->hGet( 'tenants', $event->getTenantId()->toString() );
+		$tenant          = json_decode( $tenantJson, true );
+		$tenant['state'] = $event->getTenantState()->toString();
+
 		$this->redisManager->hSet(
 			'tenants',
 			$event->getTenantId()->toString(),
-			$this->getJsonString(
-				[
-					'name'  => $event->getTenantName()->toString(),
-					'state' => $event->getTenantState()->toString(),
-				]
-			)
+			$this->getJsonString( $tenant )
 		);
 	}
 
@@ -67,15 +66,14 @@ final class TenantsProjector extends AbstractPushView
 		/** @var TenantWasUnblocked $event */
 		$event = $envelope->getEvent();
 
+		$tenantJson      = $this->redisManager->hGet( 'tenants', $event->getTenantId()->toString() );
+		$tenant          = json_decode( $tenantJson, true );
+		$tenant['state'] = $event->getTenantState()->toString();
+
 		$this->redisManager->hSet(
 			'tenants',
 			$event->getTenantId()->toString(),
-			$this->getJsonString(
-				[
-					'name'  => $event->getTenantName()->toString(),
-					'state' => $event->getTenantState()->toString(),
-				]
-			)
+			$this->getJsonString( $tenant )
 		);
 	}
 }

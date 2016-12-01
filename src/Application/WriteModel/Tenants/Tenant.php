@@ -27,7 +27,7 @@ final class Tenant extends AbstractAggregateRoot
 	/** @var RepresentsTenantState */
 	private $state;
 
-	public static function register( TenantId $id, TenantName $name ) : self
+	public static function register( TenantId $id, TenantName $name ): self
 	{
 		$tenant = new self();
 		$tenant->trackThat( new TenantWasRegistered( $id, $name, new UnblockedState() ) );
@@ -49,7 +49,7 @@ final class Tenant extends AbstractAggregateRoot
 
 	public function block()
 	{
-		$this->trackThat( new TenantWasBlocked( $this->id, $this->name, $this->state->block() ) );
+		$this->trackThat( new TenantWasBlocked( $this->id, $this->state->block() ) );
 	}
 
 	protected function whenTenantWasBlocked( TenantWasBlocked $event )
@@ -59,7 +59,7 @@ final class Tenant extends AbstractAggregateRoot
 
 	public function unblock()
 	{
-		$this->trackThat( new TenantWasUnblocked( $this->id, $this->name, $this->state->unblock() ) );
+		$this->trackThat( new TenantWasUnblocked( $this->id, $this->state->unblock() ) );
 	}
 
 	protected function whenTenantWasUnblocked( TenantWasUnblocked $event )
@@ -67,17 +67,17 @@ final class Tenant extends AbstractAggregateRoot
 		$this->setState( $event->getTenantState() );
 	}
 
-	public function getId() : TenantId
+	public function getId(): TenantId
 	{
 		return $this->id;
 	}
 
-	public function getName() : TenantName
+	public function getName(): TenantName
 	{
 		return $this->name;
 	}
 
-	public function getState() : RepresentsTenantState
+	public function getState(): RepresentsTenantState
 	{
 		return $this->state;
 	}
