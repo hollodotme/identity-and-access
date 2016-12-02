@@ -7,6 +7,7 @@ namespace hollodotme\IdentityAndAccess\Application\WriteModel\Validation;
 
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\IdentityAndAccess\Application\AbstractPullView;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityEmailWasChanged;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasRegistered;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Identity;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityEmail;
@@ -20,20 +21,18 @@ final class UniqueIdentityEmailGuard extends AbstractPullView
 {
 	public function guardIdentityEmailIsAvailable( IdentityEmail $email )
 	{
-		$registeredTenants = $this->getRegisteredIdentities();
+		$registeredIdentities = $this->getIdentityEmails();
+		$identityId           = array_search( $email->toString(), $registeredIdentities );
 
-		if ( isset($registeredTenants[ $email->toString() ]) )
+		if ( $identityId !== false )
 		{
-			throw (new IdentityEmailAlreadyRegistered())->withIdentityEmailAndId(
-				$email,
-				$registeredTenants[ $email->toString() ]
-			);
+			throw (new IdentityEmailAlreadyRegistered())->withIdentityEmailAndId( $email, $identityId );
 		}
 	}
 
-	private function getRegisteredIdentities() : array
+	private function getIdentityEmails(): array
 	{
-		$registeredTenants = [];
+		$registeredIdentities = [];
 
 		$streamName  = StreamName::fromClassName( Identity::class );
 		$eventStream = $this->pullNamedStream( $streamName );
@@ -44,10 +43,15 @@ final class UniqueIdentityEmailGuard extends AbstractPullView
 
 			if ( $event instanceof IdentityWasRegistered )
 			{
-				$registeredTenants[ $event->getIdentityEmail()->toString() ] = $event->getIdentityId();
+				$registeredIdentities[ $event->getIdentityId()->toString() ] = $event->getIdentityEmail()->toString();
+			}
+
+			if ( $event instanceof IdentityEmailWasChanged )
+			{
+				$registeredIdentities[ $event->getIdentityId()->toString() ] = $event->getIdentityEmail()->toString();
 			}
 		}
 
-		return $registeredTenants;
+		return $registeredIdentities;
 	}
 }

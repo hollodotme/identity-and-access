@@ -6,6 +6,7 @@
 namespace hollodotme\IdentityAndAccess\Application\WriteModel\Identities;
 
 use hollodotme\IdentityAndAccess\Application\WriteModel\AbstractAggregateRoot;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityEmailWasChanged;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasBlocked;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasRegistered;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasUnblocked;
@@ -91,6 +92,16 @@ final class Identity extends AbstractAggregateRoot
 	protected function whenIdentityWasUnblocked( IdentityWasUnblocked $event )
 	{
 		$this->setState( $event->getIdentityState() );
+	}
+
+	public function changeEmail( IdentityEmail $identityEmail )
+	{
+		$this->trackThat( new IdentityEmailWasChanged( $this->id, $identityEmail ) );
+	}
+
+	protected function whenIdentityEmailWasChanged( IdentityEmailWasChanged $event )
+	{
+		$this->email = $event->getIdentityEmail();
 	}
 
 	public function assignRole( Role $role )

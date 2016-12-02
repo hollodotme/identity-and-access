@@ -50,6 +50,18 @@ final class EventStream
 		yield $eventEnvelope;
 	}
 
+	public function merge( EventStream $eventStream ): EventStream
+	{
+		$mergedStream = new self( $this->getEventEnvelopes() );
+
+		foreach ( $eventStream->getEventEnvelopes() as $eventEnvelope )
+		{
+			$mergedStream->addEventEnvelope( $eventEnvelope );
+		}
+
+		return $mergedStream;
+	}
+
 	/**
 	 * @return \Generator|EnclosesEvent[]
 	 */
