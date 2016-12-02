@@ -95,6 +95,17 @@ class IdaApiClient
 		);
 	}
 
+	public function changeIdentityEmail( string $identityId, string $email ): string
+	{
+		return $this->executePostRequest(
+			$this->getUrl( '/identity/email' ),
+			[
+				'identityId'    => $identityId,
+				'identityEmail' => $email,
+			]
+		);
+	}
+
 	public function listIdentities(): array
 	{
 		return $this->executeGetRequest( $this->getUrl( '/identity/list' ), [] );
@@ -102,7 +113,7 @@ class IdaApiClient
 
 	private function executePostRequest( string $url, array $params ): string
 	{
-		$headers = [ "Cache-Control: no-cache" ];
+		$headers = ["Cache-Control: no-cache"];
 
 		$ch = curl_init();
 
@@ -136,7 +147,7 @@ class IdaApiClient
 
 	private function executeGetRequest( string $url, array $params ): array
 	{
-		$headers = [ "Cache-Control: no-cache" ];
+		$headers = ["Cache-Control: no-cache"];
 
 		$ch = curl_init();
 

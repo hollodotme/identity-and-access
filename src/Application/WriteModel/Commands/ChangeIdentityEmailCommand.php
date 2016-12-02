@@ -7,12 +7,13 @@ namespace hollodotme\IdentityAndAccess\Application\WriteModel\Commands;
 
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityEmail;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityId;
+use hollodotme\IdentityAndAccess\Infrastructure\Ports\CommandBus\Interfaces\CarriesInstruction;
 
 /**
  * Class ChangeIdentityEmailCommand
  * @package hollodotme\IdentityAndAccess\Application\WriteModel\Commands
  */
-final class ChangeIdentityEmailCommand
+final class ChangeIdentityEmailCommand implements CarriesInstruction
 {
 	/** @var IdentityId */
 	private $identityId;

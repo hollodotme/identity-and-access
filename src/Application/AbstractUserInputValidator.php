@@ -16,13 +16,14 @@ namespace hollodotme\IdentityAndAccess\Application;
 use hollodotme\FluidValidator\CheckMode;
 use hollodotme\FluidValidator\FluidValidator;
 use hollodotme\FluidValidator\MessageCollectors\GroupedListMessageCollector;
+use hollodotme\IdentityAndAccess\Application\Interfaces\ValidatesUserInput;
 use hollodotme\IdentityAndAccess\Bridges\UserInput;
 
 /**
  * Class AbstractUserInputValidator
  * @package hollodotme\IdentityAndAccess\Application
  */
-abstract class AbstractUserInputValidator
+abstract class AbstractUserInputValidator implements ValidatesUserInput
 {
 	/** @var FluidValidator */
 	private $validator;
@@ -32,7 +33,7 @@ abstract class AbstractUserInputValidator
 		$this->validator = new FluidValidator( CheckMode::CONTINUOUS, $userInput, new GroupedListMessageCollector() );
 	}
 
-	public function failed() : bool
+	public function failed(): bool
 	{
 		$this->validate( $this->validator );
 
@@ -41,14 +42,14 @@ abstract class AbstractUserInputValidator
 
 	abstract protected function validate( FluidValidator $validator );
 
-	public function passed() : bool
+	public function passed(): bool
 	{
 		$this->validate( $this->validator );
 
 		return $this->validator->passed();
 	}
 
-	public function getMessages() : array
+	public function getMessages(): array
 	{
 		return $this->validator->getMessages();
 	}

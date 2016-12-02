@@ -5,11 +5,13 @@
 
 namespace hollodotme\IdentityAndAccess\Application;
 
+use hollodotme\IdentityAndAccess\Application\Interfaces\ValidatesUserInput;
+
 /**
  * Class CompositeUserInputValidator
  * @package hollodotme\IdentityAndAccess\Application
  */
-final class CompositeUserInputValidator
+final class CompositeUserInputValidator implements ValidatesUserInput
 {
 	/** @var AbstractUserInputValidator[] */
 	private $validators;
@@ -27,7 +29,7 @@ final class CompositeUserInputValidator
 		$this->messages   = [];
 	}
 
-	public function addValidator( AbstractUserInputValidator $validator )
+	public function addValidator( ValidatesUserInput $validator )
 	{
 		$this->validators[] = $validator;
 	}

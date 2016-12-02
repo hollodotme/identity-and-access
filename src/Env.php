@@ -12,12 +12,14 @@ use hollodotme\IdentityAndAccess\Application\ReadModel\Tenants\TenantsProjector;
 use hollodotme\IdentityAndAccess\Application\Services\EventEnvelopeBuilder;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\BlockIdentityCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\BlockTenantCommandHandler;
+use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\ChangeIdentityEmailCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\RegisterIdentityCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\RegisterTenantCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\UnblockIdentityCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\CommandHandlers\UnblockTenantCommandHandler;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\BlockIdentityCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\BlockTenantCommand;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\ChangeIdentityEmailCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\RegisterIdentityCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\RegisterTenantCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\UnblockIdentityCommand;
@@ -70,12 +72,13 @@ final class Env extends AbstractObjectPool
 				$commandBus = new CommandBus();
 				$commandBus->registerCommandHandlers(
 					[
-						RegisterTenantCommand::class   => RegisterTenantCommandHandler::class,
-						BlockTenantCommand::class      => BlockTenantCommandHandler::class,
-						UnblockTenantCommand::class    => UnblockTenantCommandHandler::class,
-						RegisterIdentityCommand::class => RegisterIdentityCommandHandler::class,
-						BlockIdentityCommand::class    => BlockIdentityCommandHandler::class,
-						UnblockIdentityCommand::class  => UnblockIdentityCommandHandler::class,
+						RegisterTenantCommand::class      => RegisterTenantCommandHandler::class,
+						BlockTenantCommand::class         => BlockTenantCommandHandler::class,
+						UnblockTenantCommand::class       => UnblockTenantCommandHandler::class,
+						RegisterIdentityCommand::class    => RegisterIdentityCommandHandler::class,
+						BlockIdentityCommand::class       => BlockIdentityCommandHandler::class,
+						UnblockIdentityCommand::class     => UnblockIdentityCommandHandler::class,
+						ChangeIdentityEmailCommand::class => ChangeIdentityEmailCommandHandler::class,
 					]
 				);
 

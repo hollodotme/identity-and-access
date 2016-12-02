@@ -16,6 +16,7 @@ namespace hollodotme\IdentityAndAccess\Application\ReadModel\Identities;
 use hollodotme\IdentityAndAccess\Application\AbstractPushView;
 use hollodotme\IdentityAndAccess\Application\ReadModel\Traits\ArrayToJsonConverting;
 use hollodotme\IdentityAndAccess\Application\WriteModel\EventEnvelope;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityEmailWasChanged;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasBlocked;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasRegistered;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasUnblocked;
@@ -80,6 +81,22 @@ final class IdentitiesProjector extends AbstractPushView
 		$identityJson      = $this->redisManager->hGet( 'identities', $event->getIdentityId()->toString() );
 		$identity          = json_decode( $identityJson, true );
 		$identity['state'] = $event->getIdentityState()->toString();
+
+		$this->redisManager->hSet(
+			'identities',
+			$event->getIdentityId()->toString(),
+			$this->getJsonString( $identity )
+		);
+	}
+
+	protected function whenIdentityEmailWasChanged( EventEnvelope $envelope )
+	{
+		/** @var IdentityEmailWasChanged $event */
+		$event = $envelope->getEvent();
+
+		$identityJson      = $this->redisManager->hGet( 'identities', $event->getIdentityId()->toString() );
+		$identity          = json_decode( $identityJson, true );
+		$identity['email'] = $event->getIdentityEmail()->toString();
 
 		$this->redisManager->hSet(
 			'identities',

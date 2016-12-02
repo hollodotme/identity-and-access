@@ -9,9 +9,14 @@ use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Identities\Valid
 use hollodotme\IdentityAndAccess\Application\ApiEndpoints\Write\Identities\Validators\IdentityIdValidator;
 use hollodotme\IdentityAndAccess\Application\CompositeUserInputValidator;
 use hollodotme\IdentityAndAccess\Application\Responses\Json;
+use hollodotme\IdentityAndAccess\Application\Responses\OK;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\ChangeIdentityEmailCommand;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityEmail;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityId;
 use hollodotme\IdentityAndAccess\Bridges\AbstractWriteRequestHandler;
 use hollodotme\IdentityAndAccess\Bridges\UserInput;
 use hollodotme\IdentityAndAccess\Env;
+use hollodotme\IdentityAndAccess\StandardTypes\UUID;
 use IceHawk\IceHawk\Constants\HttpCode;
 use IceHawk\IceHawk\Interfaces\HandlesPostRequest;
 use IceHawk\IceHawk\Interfaces\ProvidesWriteRequestData;
@@ -36,5 +41,13 @@ final class ChangeIdentityEmailRequestHandler extends AbstractWriteRequestHandle
 
 			return;
 		}
+
+		$identityId    = new IdentityId( new UUID( (string)$input->get( 'identityId' ) ) );
+		$identityEmail = new IdentityEmail( (string)$input->get( 'identityEmail' ) );
+		$command       = new ChangeIdentityEmailCommand( $identityId, $identityEmail );
+
+		$env->getCommandBus()->dispatch( $command, $env );
+
+		(new OK())->respond();
 	}
 }

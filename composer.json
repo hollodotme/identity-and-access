@@ -20,6 +20,9 @@
 		"icehawk/pubsub": "^1.0",
 		"hollodotme/fluid-validator": "^1.4"
 	},
+	"require-dev": {
+		"tm/tooly-composer-script": "^1.0"
+	},
 	"autoload": {
 		"psr-4": {
 			"hollodotme\\IdentityAndAccess\\": "src/",
@@ -29,6 +32,22 @@
 	"autoload-dev": {
 		"psr-4": {
 			"hollodotme\\IdentityAndAccess\\Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"post-install-cmd": "Tooly\\ScriptHandler::installPharTools",
+		"post-update-cmd": "Tooly\\ScriptHandler::installPharTools"
+	},
+	"extra": {
+		"tools": {
+			"phpunit": {
+				"url": "https://phar.phpunit.de/phpunit.phar",
+				"only-dev": true
+			},
+			"phpmetrics": {
+				"url": "https://github.com/phpmetrics/PhpMetrics/raw/master/build/phpmetrics.phar",
+				"only-dev": true
+			}
 		}
 	}
 }

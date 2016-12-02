@@ -47,7 +47,7 @@ $startTime = microtime( true );
 $idaApiClient = new IdaApiClient();
 $results      = [];
 
-$tenantsToRegister = [ 'More & More', 'Carl Gross', 'Strauss Innovation' ];
+$tenantsToRegister = ['More & More', 'Carl Gross', 'Strauss Innovation'];
 
 foreach ( $tenantsToRegister as $tenantName )
 {
@@ -56,7 +56,7 @@ foreach ( $tenantsToRegister as $tenantName )
 
 $tenants = $idaApiClient->listTenants();
 
-$tenantsToBlock = [ 1 ];
+$tenantsToBlock = [1];
 
 foreach ( $tenantsToBlock as $index )
 {
@@ -67,9 +67,9 @@ foreach ( $tenantsToBlock as $index )
 $results['Tenants'] = $idaApiClient->listTenants();
 
 $identitiesToRegister = [
-	[ 'email' => 'hw@hollo.me', 'password' => 'test123', 'name' => 'Holger Woltersdorf' ],
-	[ 'email' => 'max@mustermann.org', 'password' => '123test', 'name' => 'Max Mustermann' ],
-	[ 'email' => 'jane@doe.com', 'password' => '456test', 'name' => 'Jane Doe' ],
+	['email' => 'hw@hollo.me', 'password' => 'test123', 'name' => 'Holger Woltersdorf'],
+	['email' => 'max@mustermann.org', 'password' => '123test', 'name' => 'Max Mustermann'],
+	['email' => 'jane@doe.com', 'password' => '456test', 'name' => 'Jane Doe'],
 ];
 
 foreach ( $identitiesToRegister as $item )
@@ -81,7 +81,7 @@ foreach ( $identitiesToRegister as $item )
 
 $identities = $idaApiClient->listIdentities();
 
-$identitiesToBlock = [ 1, 2 ];
+$identitiesToBlock = [1, 2];
 
 foreach ( $identitiesToBlock as $index )
 {
@@ -89,13 +89,19 @@ foreach ( $identitiesToBlock as $index )
 	$results[ 'Block ' . $identity['identityName'] ] = $idaApiClient->blockIdentity( $identity['identityId'] );
 }
 
+$changeEmailIdentity                                                  = $identities[0];
+$results[ 'Change email of ' . $changeEmailIdentity['identityName'] ] = $idaApiClient->changeIdentityEmail(
+	$changeEmailIdentity['identityId'],
+	'hollo@hollo.me'
+);
+
 $results['Identities'] = $idaApiClient->listIdentities();
 
 # Output
 
 foreach ( $results as $key => $result )
 {
-	printf( "%-30s: %s\n", $key, print_r( $result, true ) );
+	printf( "%-40s: %s\n", $key, print_r( $result, true ) );
 }
 
 echo "Memory consumption: " . (memory_get_peak_usage( true ) / 1024 / 1024) . " MiB\n";
