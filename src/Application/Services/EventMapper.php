@@ -9,6 +9,7 @@ use hollodotme\EventStore\AbstractEventMapper;
 use hollodotme\EventStore\Types\EventId;
 use hollodotme\EventStore\Types\StreamName;
 use hollodotme\IdentityAndAccess\Application\Exceptions\LoadingEventMapFailed;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityEmailWasChanged;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasBlocked;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasRegistered;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasUnblocked;
@@ -23,12 +24,13 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\Tenants\Events\TenantWas
 final class EventMapper extends AbstractEventMapper
 {
 	const MAP = [
-		'TenantWasRegistered'   => TenantWasRegistered::class,
-		'TenantWasBlocked'      => TenantWasBlocked::class,
-		'TenantWasUnblocked'    => TenantWasUnblocked::class,
-		'IdentityWasRegistered' => IdentityWasRegistered::class,
-		'IdentityWasBlocked'    => IdentityWasBlocked::class,
-		'IdentityWasUnblocked'  => IdentityWasUnblocked::class,
+		'TenantWasRegistered'     => TenantWasRegistered::class,
+		'TenantWasBlocked'        => TenantWasBlocked::class,
+		'TenantWasUnblocked'      => TenantWasUnblocked::class,
+		'IdentityWasRegistered'   => IdentityWasRegistered::class,
+		'IdentityWasBlocked'      => IdentityWasBlocked::class,
+		'IdentityWasUnblocked'    => IdentityWasUnblocked::class,
+		'IdentityEmailWasChanged' => IdentityEmailWasChanged::class,
 	];
 
 	protected function getEventClass( StreamName $streamName, EventId $eventId ): string

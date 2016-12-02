@@ -13,6 +13,7 @@ use hollodotme\IdentityAndAccess\Application\Responses\OK;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Commands\ChangeIdentityEmailCommand;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityEmail;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityId;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Validation\Exceptions\IdentityEmailAlreadyRegistered;
 use hollodotme\IdentityAndAccess\Bridges\AbstractWriteRequestHandler;
 use hollodotme\IdentityAndAccess\Bridges\UserInput;
 use hollodotme\IdentityAndAccess\Env;
@@ -46,8 +47,16 @@ final class ChangeIdentityEmailRequestHandler extends AbstractWriteRequestHandle
 		$identityEmail = new IdentityEmail( (string)$input->get( 'identityEmail' ) );
 		$command       = new ChangeIdentityEmailCommand( $identityId, $identityEmail );
 
-		$env->getCommandBus()->dispatch( $command, $env );
+		try
+		{
+			$env->getCommandBus()->dispatch( $command, $env );
 
-		(new OK())->respond();
+			(new OK())->respond();
+		}
+		catch ( IdentityEmailAlreadyRegistered $e )
+		{
+			$message = ['identityEmail' => ['Email address already registered: ' . $e->getIdentityEmail()]];
+			(new Json())->respond( $message, HttpCode::BAD_REQUEST );
+		}
 	}
 }

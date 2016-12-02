@@ -11,7 +11,9 @@ use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\Identi
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Events\IdentityWasRegistered;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\Identity;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityEmail;
+use hollodotme\IdentityAndAccess\Application\WriteModel\Identities\IdentityId;
 use hollodotme\IdentityAndAccess\Application\WriteModel\Validation\Exceptions\IdentityEmailAlreadyRegistered;
+use hollodotme\IdentityAndAccess\StandardTypes\UUID;
 
 /**
  * Class UniqueIdentityEmailGuard
@@ -26,7 +28,8 @@ final class UniqueIdentityEmailGuard extends AbstractPullView
 
 		if ( $identityId !== false )
 		{
-			throw (new IdentityEmailAlreadyRegistered())->withIdentityEmailAndId( $email, $identityId );
+			throw (new IdentityEmailAlreadyRegistered())
+				->withIdentityEmailAndId( $email, new IdentityId( new UUID( $identityId ) ) );
 		}
 	}
 

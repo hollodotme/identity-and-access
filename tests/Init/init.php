@@ -94,6 +94,10 @@ $results[ 'Change email of ' . $changeEmailIdentity['identityName'] ] = $idaApiC
 	$changeEmailIdentity['identityId'],
 	'hollo@hollo.me'
 );
+$results[ 'Change email of ' . $changeEmailIdentity['identityName'] . ' again' ] = $idaApiClient->changeIdentityEmail(
+	$changeEmailIdentity['identityId'],
+	'hw@hollo.me'
+);
 
 $results['Identities'] = $idaApiClient->listIdentities();
 

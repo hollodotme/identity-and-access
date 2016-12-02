@@ -132,9 +132,12 @@ class IdaApiClient
 
 		curl_close( $ch );
 
-		$this->guardCurlRequestSucceeded( $curlInfo, $curlError );
-
-		return $result;
+		return sprintf(
+			'%d %s%s',
+			$curlInfo['http_code'],
+			print_r( $result, true ),
+			$curlError ? " ({$curlError})" : ''
+		);
 	}
 
 	private function guardCurlRequestSucceeded( array $curlInfo, string $curlError )
